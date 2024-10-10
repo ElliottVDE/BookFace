@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookFace - Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/stylesheet.css">
+    <script src="src/scripts.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>BookFace</h1>
+    <div class="header-right">
+        <!-- Future elements like search bar or profile picture can go here -->
+    </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <a href="#" data-section="home" onclick="showSection('home', this)">Home</a>
+        <a href="#" data-section="profile" onclick="showSection('profile', this)">Profile</a>
+        <a href="#" data-section="friends" onclick="showSection('friends', this)">Friends</a>
+        <a href="#" data-section="messages" onclick="showSection('messages', this)">Messages</a>
+    </div>
+</nav>
+
+<main>
+    <!-- Home Section -->
+    <div id="home" class="section">
+        <div class="post">
+            <h3>Alice Smith</h3>
+            <p>Just had a great day at the park! The weather was perfect, and the kids loved it.</p>
+        </div>
+        <div class="post">
+            <h3>Bob Johnson</h3>
+            <p>Anyone up for a movie tonight? Thinking about catching the latest blockbuster.</p>
+        </div>
+        <div class="post">
+            <h3>Carol Williams</h3>
+            <p>Excited to start my new job next week! Can't wait to meet the team.</p>
+        </div>
+        <!-- Add more posts as desired -->
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profile" class="section">
+        <h2>Your Profile</h2>
+        <button id="edit-button" onclick="editProfile()">Edit Profile</button>
+        <button id="save-button" onclick="saveProfile()">Save</button>
+        <button id="cancel-button" onclick="cancelEdit()">Cancel</button>
+        <img id="profile-picture" src="https://via.placeholder.com/150" alt="Profile Picture" width="150" height="150">
+        <p><strong>Name:</strong> <span id="profile-name"></span></p>
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+        <p><strong>Location:</strong> <span id="profile-location"></span></p>
+        <p><strong>About Me:</strong></p>
+        <p id="profile-about"></p>
+        <!-- Add more profile details as needed -->
+    </div>
+
+    <!-- Friends Section -->
+    <div id="friends" class="section">
+        <h2>Your Friends</h2>
+        <div class="friend-list">
+            <div class="friend-card">
+                <img src="https://via.placeholder.com/100" alt="Friend Picture" width="100" height="100">
+                <h4>Charlie Davis</h4>
+            </div>
+            <div class="friend-card">
+                <img src="https://via.placeholder.com/100" alt="Friend Picture" width="100" height="100">
+                <h4>Diana Evans</h4>
+            </div>
+            <div class="friend-card">
+                <img src="https://via.placeholder.com/100" alt="Friend Picture" width="100" height="100">
+                <h4>Edward Franklin</h4>
+            </div>
+            <div class="friend-card">
+                <img src="https://via.placeholder.com/100" alt="Friend Picture" width="100" height="100">
+                <h4>Fiona Gallagher</h4>
+            </div>
+            <!-- Add more friend cards as desired -->
+        </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div id="messages" class="section">
+        <h2>Your Messages</h2>
+        <div class="message">
+            <h3>From: Charlie Davis</h3>
+            <p>Hey! Long time no see. How have you been?</p>
+        </div>
+        <div class="message">
+            <h3>From: Diana Evans</h3>
+            <p>Are you coming to the party this weekend? It's going to be fun!</p>
+        </div>
+        <div class="message">
+            <h3>From: Edward Franklin</h3>
+            <p>Don't forget about our meeting tomorrow at 3 PM.</p>
+        </div>
+        <!-- Add more messages as desired -->
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
+</footer>
+
+<!-- SQL Code Snippets (for reference) -->
+<!--
+-- Users Table
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    full_name VARCHAR(100),
+    profile_picture VARCHAR(255),
+    location VARCHAR(100),
+    about_me TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Posts Table
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Friends Table
+CREATE TABLE friends (
+    user_id INT NOT NULL,
+    friend_id INT NOT NULL,
+    status ENUM('pending', 'accepted', 'declined') DEFAULT 'accepted',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, friend_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (friend_id) REFERENCES users(user_id)
+);
+
+-- Messages Table
+CREATE TABLE messages (
+    message_id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    content TEXT NOT NULL,
+    read_status BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
+);
+-->
+</body>
+</html>
