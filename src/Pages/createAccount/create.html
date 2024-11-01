@@ -9,7 +9,7 @@
 <body>
     <div id="navbar-container"></div>
     
-    <form action="" method="get"
+    <form action="../Home/index.html" method="get"
     	name="login" id="login">
 
       <legend>Account Information: </legend>
@@ -20,9 +20,9 @@
           <span id="emailError">*</span>
         </div>
         <div>
-          <label for="fname">Username:</label>
-          <input type="text" name="fname" id="fname">
-          <span id="fnameError">*</span>
+          <label for="uname">Username:</label>
+          <input type="text" name="uname" id="uname">
+          <span id="userError">*</span>
         </div>
         <div>
           <label for="password">Password:</label>
@@ -30,9 +30,9 @@
           <span id="passError">*</span>
         </div>
         <div>
-          <label for="password2">Re-Enter Password:</label>
-          <input type="text" name="password2" id="password2" placeholder="">
-          <span id="password2Error">*</span>
+          <label for="repassword">Re-Enter Password:</label>
+          <input type="text" name="repassword" id="repassword" placeholder="">
+          <span id="repassError">*</span>
         </div>
         <input type="submit" id="submit" value="Create Account">
         <a href="../login/login.html"> 
@@ -41,7 +41,7 @@
       </fieldset>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="login.js"></script>
+    <script src="create.js"></script>
     <script> 
         fetch('../Components/navbar(login).html')
             .then(response => response.text())
