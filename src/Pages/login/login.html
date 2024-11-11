@@ -37,6 +37,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="login.js"></script>
     <script> 
+        window.addEventListener('DOMContentLoaded', function() {
+          localStorage.setItem('loggedIn', 'false');  // Set loggedIn to false
+          localStorage.setItem('username', '');       // Clear username
+          localStorage.setItem('password', '');       // Clear password
+        });    
+        
         fetch('../Components/navbar(login).html')
             .then(response => response.text())
             .then(data => {

@@ -109,11 +109,14 @@ footer a:hover {
     padding: 0; /* Remove default padding */
     margin: 0; /* Remove default margin */
     display: flex; /* Use flexbox for horizontal layout */
+    justify-content: center;
+    
 }
 
 .nav-links li {
-    margin-left: 20px; /* Space between links */
+    margin-left: 0 15px; /* Space between links */
 }
+
 
 .nav-links a {
     color: white; /* Link color */

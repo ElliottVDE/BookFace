@@ -16,6 +16,7 @@ const logIn = () => {
     }
   
     if (x === u1 && y === p1) {
+      localStorage.setItem('loggedIn', 'true');
       localStorage.setItem("username",u1);
       localStorage.setItem("password",p1);
       location.assign("../Home/index.html");
@@ -24,6 +25,7 @@ const logIn = () => {
       $("#username").val("");
       $("#password").val("");
     } else if (x ===u2 && y ===p2) {
+      localStorage.setItem('loggedIn', 'true');
       localStorage.setItem("username",u2);
       localStorage.setItem("password",p2);
       location.assign('../Home/index.html');
