@@ -33,13 +33,20 @@
     </div>
     <script src="scripts.js"></script>
     <script>
-        
         fetch('../Components/navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
             })
-            .catch(error => console.error('Error loading the navbar:', error));
+            .catch(error => console.error('Error loading the navbar:', error));     
+        window.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('loggedIn') === 'false') {
+            // Redirect to login page if not logged in
+
+            window.location.href = '../login/login.html';  // Change to the login page URL
+            }
+        });                        
+
     </script>
 </body>
 <footer>
