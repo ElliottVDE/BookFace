@@ -1,0 +1,13 @@
+#navbar-container {
+    background-color: #3b5998; /* Facebook blue */
+    padding: 10px;
+    color: white;
+}
+
+.navbar {
+    background-color: #3b5998; /* Facebook blue */
+    padding: 10px 20px; /* Padding for the navbar */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between logo and links */
+}

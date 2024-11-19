@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Create your Bookface Account!</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    
+    <form action="../Home/index.html" method="get"
+    	name="login" id="login">
+
+      <legend>Account Information: </legend>
+      <fieldset>
+              <div>
+          <label for="email">Email Address:</label>
+          <input type="text" name="email" id="email">
+          <span id="emailError">*</span>
+        </div>
+        <div>
+          <label for="uname">Username:</label>
+          <input type="text" name="uname" id="uname">
+          <span id="userError">*</span>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="text" name="password" id="password" placeholder="">
+          <span id="passError">*</span>
+        </div>
+        <div>
+          <label for="repassword">Re-Enter Password:</label>
+          <input type="text" name="repassword" id="repassword" placeholder="">
+          <span id="repassError">*</span>
+        </div>
+        <input type="submit" id="submit" value="Create Account">
+        <a href="../login/login.html"> 
+          <input type="button" id="back" value="Back">
+          </a>
+      </fieldset>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="create.js"></script>
+    <script> 
+        fetch('../Components/navbar(login).html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading the navbar:', error));
+    </script>
+</body>
+<footer>
+    <p>&copy; 2024 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
+</footer>
+</html>

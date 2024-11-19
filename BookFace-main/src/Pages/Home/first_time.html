@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Welcome to BookFace!</title>
+</head>
+<body>
+    <div class="section">
+        <h1>Welcome to BookFace!</h1>
+        <p>We're thrilled to have you here. BookFace lets you connect with friends, share updates, and more.</p>
+        <button id="continue">Continue to the site</button>
+    </div>
+    <script>
+        document.getElementById('continue').addEventListener('click', () => {
+            // Mark the user as a returning visitor
+            localStorage.setItem('isReturningUser', 'true');
+            // Redirect to the main site
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
