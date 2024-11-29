@@ -9,4 +9,6 @@ BookFace is a prototype social media site being built for the purposes of learni
 git clone https://github.com/ElliottVDE/BookFace.git
 ```
 
-2. Run the HTML in the home directory on your browser of choice.
+2. Open a console in the base project directory
+
+3. use 'npm start'
