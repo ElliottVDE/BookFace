@@ -33,7 +33,7 @@ const logIn = () => {
       if(x === user.username && y === user.password){
         localStorage.setItem('loggedIn', 'true');
         verified = true;
-        location.assign("../Home/index.html");
+        location.assign("../public/Home/index.html");
         document.getElementById("usernameError").textContent = "";
         document.getElementById("passwordError").textContent = "";
         $("#username").val("");

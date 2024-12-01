@@ -11,6 +11,20 @@ body {
     color: white;
 }
 
+
+#save-button, #cancel-button{
+    display: none;
+}
+
+#input-about{
+    height: 100px;
+    width: 790px;
+}
+
+#input-picture{
+    width: 300px;
+}
+
 #navbar-
 h2 {
     color: #333; /* Darker text for headings */
