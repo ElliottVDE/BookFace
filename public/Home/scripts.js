@@ -3,14 +3,13 @@ let posts = [];
 
 const fetchPosts = () => {
     fetch('/data/posts.json')
-    .then(response => response.json())
-    .then(fetchedPosts => {
-        // Update the posts array with the fetched data
-        posts = fetchedPosts;
-        localStorage.setItem('posts', JSON.stringify(posts));
-        displayPosts(posts);
-    })
-    .catch(error => console.error("Error fetching posts:", error));
+        .then(response => response.json())
+        .then(fetchedPosts => {
+            posts = fetchedPosts; // Update the posts array with the fetched data
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPosts(posts); // Display posts
+        })
+        .catch(error => console.error("Error fetching posts:", error));
 };
 
 const addPost = () => {
@@ -20,19 +19,17 @@ const addPost = () => {
 
     if (name) {
         if (description) {
-            if (imageInput != "") {
-                const post = { 
-                    name, 
-                    description, 
-                    image: imageInput.files[0] || {}
+            if (imageInput.value) {
+                const post = {
+                    name,
+                    description,
+                    image: imageInput.files[0] ? URL.createObjectURL(imageInput.files[0]) : ""
                 };
 
-                // Save to localStorage
                 posts = JSON.parse(localStorage.getItem('posts') || '[]');
                 posts.push(post);
                 localStorage.setItem('posts', JSON.stringify(posts));
-                
-                // Send post to server to update the JSON file
+
                 fetch('/api/posts', {
                     method: 'POST',
                     headers: {
@@ -40,85 +37,77 @@ const addPost = () => {
                     },
                     body: JSON.stringify(post)
                 })
-                .then(response => response.json())
-                .then(updatedPosts => {
-                    console.log("Post saved on server:", updatedPosts);
-                    displayPosts(updatedPosts); // Update the display with new posts
-                })
-                .catch(error => {
-                    console.error("Error saving post on server:", error);
-                    alert("There was an error saving the post.");
-                });
+                    .then(response => response.json())
+                    .then(updatedPosts => {
+                        console.log("Post saved on server:", updatedPosts);
+                        displayPosts(updatedPosts); // Update the display
+                    })
+                    .catch(error => {
+                        console.error("Error saving post on server:", error);
+                        alert("There was an error saving the post.");
+                    });
             } else {
-                alert("Image must be a valid entry.");
+                alert("Please upload a valid image.");
                 $("#image").focus();
             }
         } else {
-        alert("Description must be a valid entry.");
-        $("#description").focus();
+            alert("Description is required.");
+            $("#description").focus();
         }
     } else {
-        alert("Name must be a valid entry.");
+        alert("Name is required.");
         $("#name").focus();
     }
 };
 
 const displayPosts = () => {
     const postsContainer = $("#postsContainer");
-    postsContainer.innerHTML = "<h2>Posts:</h2s>"; 
-    posts.reverse().forEach(post => {
-        const postElement = document.createElement("div");
+    postsContainer.innerHTML = ""; // Clear previous posts
 
-        const nameElement = document.createElement("strong");
-        nameElement.textContent = post.name; // Display name
-        postElement.appendChild(nameElement);
+    posts.slice().reverse().forEach(post => {
+        const postCard = document.createElement("div");
+        postCard.classList.add("post-card");
 
-        const descriptionElement = document.createElement("p");
-        descriptionElement.textContent = post.description; // Display description
-        postElement.appendChild(descriptionElement);
+        const postHeader = document.createElement("div");
+        postHeader.classList.add("post-header");
+        postHeader.textContent = post.name;
+
+        const postDescription = document.createElement("div");
+        postDescription.classList.add("post-description");
+        postDescription.textContent = post.description;
+
+        postCard.appendChild(postHeader);
+        postCard.appendChild(postDescription);
 
         if (post.image) {
-            const imgElement = document.createElement('img');
-
-            // If the image is a File/Blob, use createObjectURL
-            if (post.image instanceof Blob || post.image instanceof File) {
-                imgElement.src = URL.createObjectURL(post.image);  // Handle as Blob/File
-            } else {
-                imgElement.src = post.image;  // Handle as a string URL
-            }
-
-            imgElement.style.maxWidth = "200px";  // Optional: Set max width for the image
-            imgElement.style.display = "block";   // Make sure the image displays as a block
-
-            postElement.appendChild(imgElement);  // Append the image to the post
+            const postImage = document.createElement("img");
+            postImage.src = post.image;
+            postImage.alt = "Post Image";
+            postCard.appendChild(postImage);
         }
 
-        postsContainer.appendChild(postElement);
+        postsContainer.appendChild(postCard);
     });
 };
 
 function hideSection(sectionId, button) {
-
-    // Show the selected section
-    let sectionToShow = document.getElementById(sectionId);
-    if (sectionToShow) {
-        sectionToShow.style.display = 'none';
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'none';
     }
-};
+}
 
 function showSection(sectionId, button) {
-
-    // Show the selected section
-    let sectionToShow = document.getElementById(sectionId);
-    if (sectionToShow) {
-        sectionToShow.style.display = 'block';
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'block';
     }
-};
+}
 
 document.addEventListener("DOMContentLoaded", fetchPosts);
 document.addEventListener("DOMContentLoaded", () => {
     $("#post").addEventListener("click", addPost);
     $("#name").value = "";
-    $("#description").value = ""; 
-    $("#image").value = ""; 
+    $("#description").value = "";
+    $("#image").value = "";
 });

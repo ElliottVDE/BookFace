@@ -23,6 +23,18 @@ app.get('/data/posts.json', (req, res) => {
     });
 });
 
+// Detect first-time users and redirect to the welcome page
+document.addEventListener("DOMContentLoaded", () => {
+    // Check if the user is a first-time visitor
+    if (!localStorage.getItem('firstTimeUser')) {
+        // Redirect to the Welcome Page
+        window.location.href = './welcome.html';
+        // Mark the user as visited
+        localStorage.setItem('firstTimeUser', 'false');
+    }
+});
+
+
 // Endpoint to add a post
 app.post('/api/posts', (req, res) => {
     const newPost = req.body;

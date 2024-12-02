@@ -18,7 +18,7 @@ function authenticatePass(password, repassword){
     const passPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\[\]:;\"'|\\<>,.?/~`-]{8,}$/;
 
     if (!passPattern.test(password)){
-        document.getElementById("passError").textContent = "Please enter a valid password";
+        document.getElementById("passError").textContent = "Please enter a valid password (With 8 Characters, 1 Uppercase, 1 number, Special Characters allowed)";
         return false;
     }
     
@@ -39,7 +39,7 @@ function authenticateUserName(username){
     const userPattern = /^[A-Za-z0-9+-]+$/;
 
     if (!userPattern.test(username)){
-        document.getElementById("userError").textContent = "Please enter a valid username";
+        document.getElementById("userError").textContent = "Please enter a valid username (No spaces or special characters)";
         return false;
     }
     
