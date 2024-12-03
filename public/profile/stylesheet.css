@@ -26,6 +26,10 @@ body {
     padding: 20px;
 }
 
+#save-button, #cancel-button {
+    display: none;
+}
+
 /* Headings */
 h1, h2, h3 {
     color: var(--primary-color);
