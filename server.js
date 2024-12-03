@@ -23,6 +23,7 @@ app.get('/data/posts.json', (req, res) => {
     });
 });
 
+/*
 // Detect first-time users and redirect to the welcome page
 document.addEventListener("DOMContentLoaded", () => {
     // Check if the user is a first-time visitor
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('firstTimeUser', 'false');
     }
 });
+*/
 
 
 // Endpoint to add a post
