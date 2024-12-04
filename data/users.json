@@ -1,0 +1,32 @@
+[
+  {
+    "username": "user0",
+    "password": "$2b$10$kvSa8cP6LP88sE046NgEMOvWwV5r/VXxnpwGvzktlFeHzMeilWaa2",
+    "email": "hello@aol.com"
+  },
+  {
+    "username": "user",
+    "password": "$2b$10$wqseViLe2gXs3pL.JWua/u5hIrFyaMz/BKM1yQROFV1jUe18zSU1i",
+    "email": "user@user.com"
+  },
+  {
+    "username": "user1",
+    "password": "$2b$10$ts/chwCU20fv/HWzEDTA0exmwWh2PTFfwCIqiAaASpRgjbiMbys1O",
+    "email": "hello@aol.com"
+  },
+  {
+    "username": "user9",
+    "password": "$2b$10$lOcpllcwhHqRvbK.Bie0UO5b2T5oWxLZgchxcuFn/u3cDI8dX6YK6",
+    "email": "hello@aol.com"
+  },
+  {
+    "username": "user10",
+    "password": "$2b$10$qGJ5IzvuYquL61l3cKLfsel8zW1I08tb99ffbxRzh094e993CocUC",
+    "email": "hello@aol.com"
+  },
+  {
+    "username": "user20",
+    "password": "$2b$10$Ab/czUxDonJ9aLYtQFtMGua.mLTRW7/EIMpvWp88NoeznskAduW6y",
+    "email": "hello@aol.com"
+  }
+]
