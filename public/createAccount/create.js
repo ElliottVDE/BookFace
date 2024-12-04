@@ -4,6 +4,7 @@ function authenticateEmail(email){
     const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/;
     
     if(!emailPattern.test(email)){
+        document.getElementById("email").value = "";
         document.getElementById("emailError").textContent = "Please enter a valid email";
         return false;
     }
@@ -18,11 +19,13 @@ function authenticatePass(password, repassword){
     const passPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\[\]:;\"'|\\<>,.?/~`-]{8,}$/;
 
     if (!passPattern.test(password)){
+        document.getElementById("password").value = "";
         document.getElementById("passError").textContent = "Please enter a valid password (With 8 Characters, 1 Uppercase, 1 number, Special Characters allowed)";
         return false;
     }
     
-    if (!(password.includes(repassword))){
+    if (password !== repassword){
+        document.getElementById("repassword").value = "";
         document.getElementById("repassError").textContent = "";
         document.getElementById("repassError").textContent = "Make sure each password matches";
         return false;
@@ -39,6 +42,7 @@ function authenticateUserName(username){
     const userPattern = /^[A-Za-z0-9+-]+$/;
 
     if (!userPattern.test(username)){
+        document.getElementById("uname").value = "";
         document.getElementById("userError").textContent = "Please enter a valid username (No spaces or special characters)";
         return false;
     }
@@ -85,8 +89,7 @@ $(document).ready( () => {
             })
             .then(response => response.json())
             .catch(error => {
-                console.error("Error saving user on server:", error);
-                alert("There was an error saving the user.");
+                document.getElementById("postError").textContent = "There was an error saving the user.";
             });
             location.assign("../index.html");
         }

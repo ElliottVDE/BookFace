@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
 
 const app = express();
@@ -36,6 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 */
 
+// Endpoint to get users
+app.get('/data/users.json', (req, res) => {
+    fs.readFile('data/users.json', 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send("Error reading users file.");
+        }
+        res.json(JSON.parse(data));
+    });
+});
 
 // Endpoint to add a post
 app.post('/api/posts', (req, res) => {
@@ -57,34 +68,68 @@ app.post('/api/posts', (req, res) => {
     });
 });
 
-// Endpoint to get users
-app.get('/data/users.json', (req, res) => {
-    fs.readFile('data/users.json', 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send("Error reading users file.");
+
+
+app.post('/api/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: 'Username and password are required' });
         }
-        res.json(JSON.parse(data));
-    });
+
+        // Read users data from the file (simulating a database)
+        const data = await fsPromises.readFile('data/users.json', 'utf8');
+        const users = JSON.parse(data);
+        // Find the user by username
+        const user = users.find(user => user.username === username);
+
+        if (!user) {
+            return res.status(404).json({ error: 'Username or password incorrect.' });
+        }
+
+        // Compare the provided password with the hashed password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Username or password incorrect.' });
+        }
+
+        // If the login is successful, send a success response
+        res.status(200).json({ message: 'Login successful' });
+
+    } catch (error) {
+        console.error('Error logging in:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
 });
 
-// Endpoint to add a post
-app.post('/api/users', (req, res) => {
-    const newUser = req.body;
-    fs.readFile('data/users.json', 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send("Error reading posts file.");
+// Endpoint to add a user
+app.post('/api/users', async (req, res) => {
+    try {
+        
+        const newUser = {
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email
         }
 
-        const users = JSON.parse(data);
+        // Hash the password before storing it in the "database"
+        const hashedPassword = await bcrypt.hash(newUser.password, 10);
+
+        newUser.password = hashedPassword;
+
+        const data = await fsPromises.readFile('data/users.json', 'utf8');
+        let users = JSON.parse(data);
         users.push(newUser);
 
-        fs.writeFile('data/users.json', JSON.stringify(users, null, 2), 'utf8', (err) => {
-            if (err) {
-                return res.status(500).send("Error saving user.");
-            }
-            //res.json(users); // Return the updated posts list
-        });
-    });
+        await fsPromises.writeFile('data/users.json', JSON.stringify(users, null, 2), 'utf8');
+
+        res.status(201).json({ message: 'User created successfully' });
+    } catch(error){
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: 'Error creating user' });
+    }
 });
 
 // Start server

@@ -11,7 +11,7 @@ const fetchUsers = () => {
   .catch(error => console.error("Error fetching users:", error));
 };
 
-const logIn = () => {
+const logIn = async () => {
     //TODO: Implement for log-ins in db when SQL is implemented
     //const u1 = "admin";
     //const u2 = "teacherman";
@@ -19,31 +19,51 @@ const logIn = () => {
     //const p2 = "password";
 
     let verified = false;
-    let x = $("#username").val();
-    let y = $("#password").val();
+    let username = $("#username").val();
+    let password = $("#password").val();
   
-    if (x.trim() === "" || y.trim() === "") {
+    if (username.trim() === "" || password.trim() === "") {
       document.getElementById("usernameError").textContent = "Please enter a username and password"
       document.getElementById("passwordError").textContent = "Please enter a username and password"
     return;
       
     }
-    users.forEach(user => {
 
-      if(x === user.username && y === user.password){
-        localStorage.setItem('loggedIn', 'true');
-        verified = true;
-        location.assign("Home/index.html");
-        document.getElementById("usernameError").textContent = "";
-        document.getElementById("passwordError").textContent = "";
-        $("#username").val("");
-        $("#password").val("");
-      };
-    });
-      if(verified === false) {
-        alert("Username or password incorrect.");
-      };
+    // users.forEach(user => {
 
+    //   if(x === user.username && y === user.password){
+    //     localStorage.setItem('loggedIn', 'true');
+    //     verified = true;
+    //     location.assign("Home/index.html");
+    //     document.getElementById("usernameError").textContent = "";
+    //     document.getElementById("passwordError").textContent = "";
+    //     $("#username").val("");
+    //     $("#password").val("");
+    //   };
+    // });
+    //   if(verified === false) {
+    //     document.getElementById("password").value = "";
+    //     alert("Username or password incorrect.");
+    //   };
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+      });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem('loggedIn', 'true');
+      location.assign("Home/index.html");
+    } else {
+      alert(data.error);  // Show error message
+      document.getElementById("password").value = "";
+    }
     // if (x === u1 && y === p1) {
     //   localStorage.setItem('loggedIn', 'true');
     //   localStorage.setItem("username",u1);
