@@ -1,0 +1,68 @@
+[
+  {
+    "name": "First Post",
+    "description": "This is the first post description.",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "Second Post",
+    "description": "This is the second post description.",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "hello",
+    "description": "world",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "hello",
+    "description": "world",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "final",
+    "description": "test",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "Finallysomething",
+    "description": "good",
+    "image": {},
+    "groupId": 1
+  },
+  {
+    "name": "This is my example",
+    "description": "Hello",
+    "image": {},
+    "groupId": 2
+  },
+  {
+    "name": "the image",
+    "description": "is not working",
+    "image": {},
+    "groupId": 2
+  },
+  {
+    "name": "again Ill try",
+    "description": "is it workign?",
+    "image": {},
+    "groupId": 2
+  },
+  {
+    "name": "okay nice",
+    "description": "Great job",
+    "image": {},
+    "groupId": 2
+  },
+  {
+    "name": "awesome",
+    "description": "awesome",
+    "image": {},
+    "groupId": 2
+  }
+]

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BookFace - Group Posts</title>
+  <link rel="stylesheet" href="../stylesheet.css"> 
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div id="groupPosts" class="section">
+    <h2 id="groupTitle">Group: (loading...)</h2>
+    <p id="groupDescription"></p>
+
+    <div id="createPostForm">
+      <h3>Create a Post in This Group</h3>
+      <label for="postName">Name:</label>
+      <input type="text" id="postName">
+
+      <label for="postDescription">Description:</label>
+      <textarea id="postDescription"></textarea>
+
+      <label for="postImage">Image (optional):</label>
+      <input type="file" id="postImage" accept="image/*">
+
+      <button id="submitPostBtn">Submit Post</button>
+    </div>
+
+    <hr>
+
+    <h3>All Posts in This Group</h3>
+    <div id="postsContainer"></div>
+  </div>
+
+  <script>
+    // 1. Load the navbar
+    fetch('../Components/navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(err => console.error(err));
+
+    // 2. Parse groupId from URL
+    const params = new URLSearchParams(window.location.search);
+    const groupId = parseInt(params.get('groupId'), 10);
+
+    // 3. Fetch group info & display
+    fetch('/data/groups.json')
+      .then(response => response.json())
+      .then(groups => {
+        const currentGroup = groups.find(g => g.id === groupId);
+        if (currentGroup) {
+          document.getElementById('groupTitle').textContent = currentGroup.name;
+          document.getElementById('groupDescription').textContent = currentGroup.description;
+        } else {
+          document.getElementById('groupTitle').textContent = "Unknown Group";
+        }
+      })
+      .catch(err => console.error(err));
+
+    // 4. Fetch posts & filter
+    let allPosts = [];
+    fetch('/data/posts.json')
+      .then(response => response.json())
+      .then(posts => {
+        allPosts = posts;
+        const filtered = posts.filter(post => post.groupId === groupId);
+        displayPosts(filtered);
+      })
+      .catch(err => console.error(err));
+
+    // 5. Display posts
+    function displayPosts(postsArray) {
+      const container = document.getElementById('postsContainer');
+      container.innerHTML = '';
+      postsArray.slice().reverse().forEach(post => {
+        const postCard = document.createElement('div');
+        postCard.classList.add('post-card');
+
+        postCard.innerHTML = `
+          <h4>${post.name}</h4>
+          <p>${post.description}</p>
+          ${post.image ? `<img src="${post.image}" alt="Post Image">` : ''}
+        `;
+        container.appendChild(postCard);
+      });
+    }
+
+    // 6. Create post button logic
+    document.getElementById('submitPostBtn').addEventListener('click', () => {
+      const name = document.getElementById('postName').value.trim();
+      const description = document.getElementById('postDescription').value.trim();
+      const imageInput = document.getElementById('postImage');
+
+      if (!name || !description) {
+        alert("Name and Description are required!");
+        return;
+      }
+
+      let imageUrl = '';
+      if (imageInput.files && imageInput.files[0]) {
+        imageUrl = URL.createObjectURL(imageInput.files[0]);
+      }
+
+      const newPost = {
+        name,
+        description,
+        image: imageUrl,
+        groupId: groupId
+      };
+
+      
+      allPosts.push(newPost);
+      
+      const filtered = allPosts.filter(p => p.groupId === groupId);
+      displayPosts(filtered);
+
+      
+      document.getElementById('postName').value = '';
+      document.getElementById('postDescription').value = '';
+      imageInput.value = '';
+    });
+  </script>
+</body>
+</html>

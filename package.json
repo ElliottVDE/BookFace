@@ -1,0 +1,22 @@
+{
+  "name": "bookface",
+  "version": "1.0.0",
+  "description": "BookFace is a prototype social media site being built for the purposes of learning and gaining experience for CMICH university students.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "browser-sync start --proxy 'localhost:3000' --files 'public/**/*.*'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "nodemon": "^3.1.7"
+  }
+}

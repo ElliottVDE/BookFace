@@ -1,0 +1,13 @@
+[
+    {
+      "id": 1,
+      "name": "Funny Memes",
+      "description": "All about sharing memes"
+    },
+    {
+      "id": 2,
+      "name": "Tech",
+      "description": "Discussions on programming"
+    }
+    
+  ]
