@@ -98,10 +98,11 @@
         return;
       }
 
-      let imageUrl = '';
+      let imageUrl = "";
       if (imageInput.files && imageInput.files[0]) {
         imageUrl = URL.createObjectURL(imageInput.files[0]);
       }
+      
 
       const newPost = {
         name,

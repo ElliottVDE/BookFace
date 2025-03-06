@@ -1,17 +1,16 @@
-<!-- groups.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>BookFace - Groups</title>
-  <link rel="stylesheet" href="../stylesheet.css"> <!-- Adjust path as needed -->
+  <link rel="stylesheet" href="../stylesheet.css"> 
 </head>
 <body>
   <div id="navbar-container"></div>
 
   <div id="groups" class="section">
     <h2>All Groups</h2>
-    <div id="groupList"></div> <!-- We'll fill this with JS -->
+    <div id="groupList"></div> 
   </div>
 
   <script>
@@ -29,10 +28,9 @@
       .then(groups => {
         const groupListDiv = document.getElementById('groupList');
         groups.forEach(group => {
-          // Build a simple card or list item for each group
+          
           const groupCard = document.createElement('div');
-          groupCard.classList.add('group-card'); // Optional CSS class
-
+          groupCard.classList.add('group-card'); 
           groupCard.innerHTML = `
             <h3>${group.name}</h3>
             <p>${group.description}</p>
@@ -45,7 +43,7 @@
 
     // 3. "Visit" button function
     function visitGroup(groupId) {
-      // For example, navigate to group_posts.html with ?groupId=...
+     
       window.location.href = `../group_posts/group_posts.html?groupId=${groupId}`;
     }
   </script>
