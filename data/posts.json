@@ -2,67 +2,111 @@
   {
     "name": "First Post",
     "description": "This is the first post description.",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "Second Post",
     "description": "This is the second post description.",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "hello",
     "description": "world",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "hello",
     "description": "world",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "final",
     "description": "test",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "Finallysomething",
     "description": "good",
+<<<<<<< HEAD
     "image": {},
     "groupId": 1
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "This is my example",
     "description": "Hello",
+<<<<<<< HEAD
     "image": {},
     "groupId": 2
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "the image",
     "description": "is not working",
+<<<<<<< HEAD
     "image": {},
     "groupId": 2
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "again Ill try",
     "description": "is it workign?",
+<<<<<<< HEAD
     "image": {},
     "groupId": 2
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "okay nice",
     "description": "Great job",
+<<<<<<< HEAD
     "image": {},
     "groupId": 2
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   },
   {
     "name": "awesome",
     "description": "awesome",
+<<<<<<< HEAD
     "image": {},
     "groupId": 2
+=======
+    "image": {}
+>>>>>>> 9d8c0555e9581d00aa82fa052eb9010728286126
   }
 ]
