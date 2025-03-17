@@ -76,7 +76,7 @@ $(document).ready( () => {
             };
 
             // Send user to server to update the JSON file
-            fetch('/api/users', {
+            fetch('http://localhost:5050/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -2,11 +2,12 @@
 let users = [];
 
 const fetchUsers = () => {
-  fetch('/data/users.json')
+  fetch('http://localhost:5050/user')
   .then(response => response.json())
   .then(fetchedUsers => {
       // Update the posts array with the fetched data
       users = fetchedUsers;
+      console.log(users);
   })
   .catch(error => console.error("Error fetching users:", error));
 };
@@ -29,7 +30,7 @@ const logIn = () => {
       
     }
     users.forEach(user => {
-
+      console.log(user.password);
       if(x === user.username && y === user.password){
         localStorage.setItem('loggedIn', 'true');
         verified = true;

@@ -2,7 +2,7 @@ const $ = selector => document.querySelector(selector);
 let posts = [];
 
 const fetchPosts = () => {
-    fetch('/data/posts.json')
+    fetch('http://localhost:5050/post')
         .then(response => response.json())
         .then(fetchedPosts => {
             posts = fetchedPosts; // Update the posts array with the fetched data
@@ -12,25 +12,26 @@ const fetchPosts = () => {
         .catch(error => console.error("Error fetching posts:", error));
 };
 
-const addPost = () => {
+const addPost = async () => {
     const name = $("#name").value.trim();
-    const description = $("#description").value.trim();
+    const desc = $("#description").value.trim();
     const imageInput = $("#image");
 
     if (name) {
         if (description) {
             if (imageInput.value) {
+                const base64 = await convertToBase64(imageInput.files[0]);
                 const post = {
                     name,
-                    description,
-                    image: imageInput.files[0] ? URL.createObjectURL(imageInput.files[0]) : ""
+                    desc,
+                    image: base64
                 };
-
+                console.log(post);
                 posts = JSON.parse(localStorage.getItem('posts') || '[]');
                 posts.push(post);
                 localStorage.setItem('posts', JSON.stringify(posts));
 
-                fetch('/api/posts', {
+                fetch('http://localhost:5050/post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -74,7 +75,7 @@ const displayPosts = () => {
 
         const postDescription = document.createElement("div");
         postDescription.classList.add("post-description");
-        postDescription.textContent = post.description;
+        postDescription.textContent = post.desc;
 
         postCard.appendChild(postHeader);
         postCard.appendChild(postDescription);
@@ -111,3 +112,16 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#description").value = "";
     $("#image").value = "";
 });
+
+function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error);
+        }
+    })
+}
