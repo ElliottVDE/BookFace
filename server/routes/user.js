@@ -38,7 +38,12 @@ router.post("/", async (req, res) => {
         let newUser = {
             username: username,
             password: hashedPassword,
-            email: email
+            email: email,
+            name: "John Doe",
+            location: "New York, USA",
+            about: "Description...",
+            picture: null,
+            saved: null
         };
         let collection = await db.collection("users");
         let result = await collection.insertOne(newUser);
@@ -80,6 +85,49 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.put("/:username/saves", async (req, res) => {
+    try {
+        const { username } = req.params;
+        const { saved } = req.body;
+
+        const collection = await db.collection("users");
+        const result = await collection.updateOne(
+            { username },
+            { $set: { saved } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).send("User not found");
+        }
+
+        res.status(200).send("User updated successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating user");
+    }
+});
+
+router.put("/:username", async (req, res) => {
+    try {
+        const { username } = req.params;
+        const { name , email , location, about, picture } = req.body;
+
+        const collection = await db.collection("users");
+        const result = await collection.updateOne(
+            { username },
+            { $set: { name , email , location, about, picture } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).send("User not found");
+        }
+
+        res.status(200).send("User updated successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating user");
+    }
+});
 // router.patch("/:id", async (req, res) => {
 //     try {
 //         const query = { _id: new ObjectId(req.params.id) };
