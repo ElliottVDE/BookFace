@@ -89,7 +89,7 @@ button:active, input[type="submit"]:active, input[type="button"]:active {
 
 /* Profile Section */
 .section {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 20px auto;
     background: var(--secondary-color);
     padding: 20px;
@@ -126,6 +126,55 @@ button:active, input[type="submit"]:active, input[type="button"]:active {
     align-items: center;
 }
 
+#postsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+/* Post Cards */
+.post-card {
+    max-width: 300px;
+    display: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 12px; /* slightly tighter */
+    gap: 8px; /* smaller vertical spacing between children */
+    margin-bottom: 10px; /* if you're stacking cards */
+  }
+  
+  .post-card .post-description {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0; /* remove default <p> margin */
+  }
+  
+  /* Show More/Less Button */
+  .post-card button.toggle-button {
+    align-self: flex-start;
+    padding: 4px 10px;
+    font-size: 13px;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .post-card button.toggle-button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+
+  .post-card img {
+    width: 100%;
+    height: auto;
+    max-height:300px;
+    max-width:300px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
 #profile p strong {
     font-weight: 600;
     color: var(--primary-color);

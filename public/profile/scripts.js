@@ -1,3 +1,35 @@
+let username = localStorage.getItem('username');
+const $ = selector => document.querySelector(selector);
+let posts = [];
+
+const fetchPosts = () => {
+    fetch('http://localhost:5050/post')
+        .then(response => response.json())
+        .then(data => {
+            const posts = data; // Update the posts array with the fetched data
+            if (Array.isArray(posts)) {
+                displayPosts(posts);
+              } else {
+                console.error("Posts is not an array:", posts);
+              }
+            localStorage.setItem('posts', JSON.stringify(posts));
+                
+        })
+        .catch(error => console.error("Error fetching posts:", error));
+};
+
+const fetchUser = () => {
+  fetch(`http://localhost:5050/user/${username}`)
+  .then(response => response.json())
+  .then(fetchedUser => {
+      // Update the posts array with the fetched data
+      const user = fetchedUser;
+      const savedUser = JSON.stringify(user);
+      localStorage.setItem('User', savedUser);
+  })
+  .catch(error => console.error("Error fetching users:", error));
+};
+
 // Elements for displaying and editing profile data
 const profileName = document.getElementById('profile-name');
 const profileEmail = document.getElementById('profile-email');
@@ -12,24 +44,118 @@ const cancelButton = document.getElementById('cancel-button');
 let editing = false;
 let originalData = {}; // To store the original data for cancel functionality
 
-// Populate initial profile data (you can replace this with actual data from an API or database)
-const initialData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    location: "New York, USA",
-    about: "Web developer and tech enthusiast.",
-    picture: "https://via.placeholder.com/150"
+const updateUser = async (updatedUser) => {
+    try {
+        const response = await fetch(`http://localhost:5050/user/${username}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: updatedUser.name , email: updatedUser.email ,
+                location: updatedUser.location , about: updatedUser.about, picture: updatedUser.picture
+             })
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update saved posts");
+        }
+
+        console.log("Saved posts updated!");
+    } catch (error) {
+        console.error("Error updating saved posts:", error);
+    }
+    fetchUser;
 };
 
+document.addEventListener("DOMContentLoaded", fetchPosts);
+
 function loadProfile() {
-    profileName.textContent = initialData.name;
-    profileEmail.textContent = initialData.email;
-    profileLocation.textContent = initialData.location;
-    profileAbout.textContent = initialData.about;
-    profilePicture.src = initialData.picture;
+    let user = JSON.parse(localStorage.getItem('User'));
+    if (user) {
+        // Populate profile fields with the user data
+        profileName.textContent = user.name || 'No name available';
+        profileEmail.textContent = user.email || 'No email available';
+        profileLocation.textContent = user.location || 'No location available';
+        profileAbout.textContent = user.about || 'No about information available';
+         profilePicture.src = user.picture || 'default-picture.jpg'; // Use a default image if not available
+    } else {
+        console.warn('No user data found in localStorage.');
+    }
 }
 
-loadProfile();
+document.addEventListener("DOMContentLoaded", loadProfile);
+document.addEventListener("DOMContentLoaded", fetchUser);
+
+const displayPosts = (posts) => {
+    const postsContainer = $("#postsContainer");
+    let saves = [];
+    postsContainer.innerHTML = ""; // Clear previous posts
+    saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
+    const savedPosts = posts.filter(post => saves.includes(post._id));
+    console.log(savedPosts);
+    savedPosts.slice().reverse().forEach(post => {
+        const postCard = document.createElement("div");
+        postCard.classList.add("post-card");
+        isSaved = saves.includes(post._id);
+
+        // Post header (name)
+        const postHeader = document.createElement("div");
+        postHeader.classList.add("post-header");
+        postHeader.textContent = post.name;
+
+        postCard.appendChild(postHeader);
+        // Description logic
+        const fullText = post.desc;
+        const shortText = fullText.slice(0, 80);
+        const remainingText = fullText.slice(80);
+        const charLimit = 80;
+
+        const description = document.createElement("p");
+        description.classList.add("post-description");
+
+        const shortTextNode = document.createElement("span");
+        // const shortTextNode = document.createTextNode(shortText);
+        shortTextNode.textContent = shortText;
+        shortTextNode.style.display = "inline";
+        shortTextNode.classList.add("short-text");
+
+        const moreTextSpan = document.createElement("span");
+        moreTextSpan.textContent = fullText;
+        moreTextSpan.style.display = "none";
+        moreTextSpan.classList.add("more-text");
+
+        description.appendChild(shortTextNode);
+        description.appendChild(moreTextSpan);
+        postCard.appendChild(description);
+
+
+        // Show More / Less Button
+        const toggleButton = document.createElement("button");
+        toggleButton.textContent = "Show More";
+        toggleButton.classList.add("toggle-button");
+
+        toggleButton.addEventListener("click", () => {
+            const isHidden = moreTextSpan.style.display === "none";
+            moreTextSpan.style.display = isHidden ? "inline" : "none";
+            shortTextNode.style.display = isHidden ? "none" : "inline";
+            toggleButton.textContent = isHidden ? "Show Less" : "Show More";
+        });
+        if (post.desc.length > charLimit) {
+            postCard.appendChild(toggleButton);
+            }
+
+        // Add image
+        if (post.image !== null) {
+            const postImage = document.createElement("img");
+            postImage.src = post.image;
+            postImage.alt = "Post Image";
+            postCard.appendChild(postImage);
+        }
+
+        postsContainer.appendChild(postCard);
+ });
+
+}
 
 function editProfile() {
     if (editing) return; // Prevent multiple edit states
@@ -113,9 +239,20 @@ function cancelEdit() {
 }
 
 function applyProfileData(data) {
+    let user = JSON.parse(localStorage.getItem('User'));
+
     profileName.textContent = data.name;
+    user.name = data.name;
     profileEmail.textContent = data.email;
+    user.email = data.email;
     profileLocation.textContent = data.location;
+    user.location = data.location;
     profileAbout.textContent = data.about;
+    user.about = data.about;
     profilePicture.src = data.picture;
+    user.picture = data.picture;
+    console.log(user);
+
+    localStorage.setItem('User', JSON.stringify(user));
+    updateUser(user);
 }

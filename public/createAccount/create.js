@@ -56,6 +56,7 @@ $(document).ready( () => {
         let email = $("#email").val();
         let password = $("#password").val();
         let rePassword = $("#repassword").val();
+        let savedPosts = null;
         let accValid = true;
 
         let emailValid = authenticateEmail(email);
@@ -72,7 +73,8 @@ $(document).ready( () => {
             const user = {
                 username,
                 password,
-                email
+                email,
+                savedPosts
             };
 
             // Send user to server to update the JSON file

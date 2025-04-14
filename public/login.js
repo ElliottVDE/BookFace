@@ -30,9 +30,9 @@ const logIn = () => {
       
     }
     users.forEach(user => {
-      console.log(user.password);
       if(x === user.username && y === user.password){
         localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('username', user.username)
         verified = true;
         location.assign("Home/index.html");
         document.getElementById("usernameError").textContent = "";
