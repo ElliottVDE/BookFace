@@ -7,6 +7,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <title>BookFace - Sign in</title>
+    <style>
+      #content {
+          display: flex;
+          margin: 1em 0;
+      }
+      #sidebar {
+          width: 25%;
+          padding: 1em;
+          background: #f0f0f0;
+          box-sizing: border-box;
+      }
+      #sidebar h2 {
+          margin-top: 0;
+      }
+      #sidebar ul {
+          list-style-type: none;
+          padding: 0;
+      }
+      #sidebar li {
+          margin: 0.5em 0;
+          cursor: pointer;
+      }
+      #mainFeed {
+          width: 75%;
+          padding: 1em;
+          box-sizing: border-box;
+      }
+      #mainFeed h2 {
+          margin-top: 0;
+      }
+      .post {
+          border-bottom: 1px solid #ccc;
+          margin-bottom: 1em;
+          padding-bottom: 0.5em;
+      }
+  </style>
 </head>
 <body>
     <div id="navbar-container"></div>
@@ -37,6 +73,20 @@
         </form>
     </div>
 
+    <div id="content">
+      <div id="sidebar">
+          <h2>Your Groups</h2>
+          <ul id="groupList">
+          </ul>
+      </div>
+      
+      <div id="mainFeed">
+          <h2>Group Posts</h2>
+          <div id="postsContainer">
+          </div>
+      </div>
+  </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="login.js"></script>
     <script> 
@@ -52,9 +102,55 @@
                 document.getElementById('navbar-container').innerHTML = data;
             })
             .catch(error => console.error('Error loading the navbar:', error));
+
+            const userId = 'currentUserId';
+
+            //Check and Loads Groups
+            function loadGroups() {
+              fetch(`/groups/user/${userId}`)
+                  .then(response => response.json())
+                  .then(groups => {
+                      const groupList = document.getElementById('groupList');
+                      groupList.innerHTML = '';
+                      groups.forEach(group => {
+                          const li = document.createElement('li');
+                          li.textContent = group.name;
+                          li.addEventListener('click', () => loadGroupPosts(group.id));
+                          groupList.appendChild(li);
+                      });
+                  })
+                  .catch(error => console.error('Error loading groups:', error));
+          }
+  
+          //Load Group Posts
+          function loadGroupPosts(groupId) {
+              fetch(`/groups/${groupId}/posts`)
+                  .then(response => response.json())
+                  .then(posts => {
+                      const postsContainer = document.getElementById('postsContainer');
+                      postsContainer.innerHTML = '';
+                      if (posts.length === 0) {
+                          postsContainer.innerHTML = '<p>No posts in this group yet.</p>';
+                      } else {
+                          posts.forEach(post => {
+                              const postDiv = document.createElement('div');
+                              postDiv.className = 'post';
+                              postDiv.innerHTML = `
+                                  <p>${post.content || ''}</p>
+                                  <small>Posted by: ${post.userId} at ${new Date(post.timestamp).toLocaleString()}</small>
+                              `;
+                              postsContainer.appendChild(postDiv);
+                          });
+                      }
+                  })
+                  .catch(error => console.error('Error loading posts:', error));
+          }
+  
+          // ADDED: Initialize group feed by loading user's groups on page load.
+          window.addEventListener('DOMContentLoaded', loadGroups);
     </script>
 </body>
 <footer>
-    <p>&copy; 2024 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
+    <p>&copy; 2025 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
 </footer>
 </html>

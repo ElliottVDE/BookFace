@@ -3,15 +3,18 @@ import cors from "cors";
 import mongoose from "mongoose";
 import posts from "./server/routes/post.js";
 import users from "./server/routes/user.js";
-
+import groups from "./server/routes/groups.js";
 const PORT = process.env.PORT || 5050;
 const app = express();
+// const groupRoutes = require('./server/routes/groups');
+
 
 
 app.use(cors());
 app.use(express.json());
 app.use("/post", posts);
 app.use("/user", users);
+app.use("/groups", groups);
 
 
 // media routes

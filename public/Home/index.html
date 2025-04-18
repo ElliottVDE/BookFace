@@ -12,9 +12,10 @@
     <div id="navbar-container"></div>
 
      <!-- Home Section -->
-     <div id="home" class="section">
-        <button id="post-button" onclick="showSection('createPost', this)">Create Post</button>
-        <button id="post-button" onclick="hideSection('createPost', this)">Hide</button>
+    <div id="home" class="section">
+        <button id="post-button" onclick="showSection('createPost', this); hideSection('createGroup', this)">Create Post</button>
+        <button id="post-button" onclick="hideSection('createPost', this); hideSection('createGroup', this)">Hide</button>
+        <button id="group-button" onclick="showSection('createGroup', this); hideSection('createPost', this)">Create Group</button>
         <div id="createPost" class="section">
             <h1>Write a Post</h1>
             <div>
@@ -29,7 +30,28 @@
                 <input type="file" id="image" accept="image/*">
             </div>
             <div>
+                <label for="text">Group:</label>
+                <input type="text" id="groupID">
+            </div>
+            <div>
                 <button id="post">Post</button>
+        </div>
+    </div>
+        <div id="createGroup" class="section">
+            <h1>Start a Group</h1>
+            <div>
+                <label for="gname">Name:</label>
+                <input type="text" id="gname">
+            </div>
+            <div>
+                <input type="text" id="gdescription" class="large_textbox">
+            </div>
+            <div>
+                <label for="gimage">Image:</label>
+                <input type="file" id="gimage" accept="image/*">
+            </div>
+            <div>
+                <button id="groupPost">Create</button>
         </div>
     </div>
     <div id="postsContainer"></div>

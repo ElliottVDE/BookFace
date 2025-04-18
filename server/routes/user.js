@@ -43,7 +43,8 @@ router.post("/", async (req, res) => {
             location: "New York, USA",
             about: "Description...",
             picture: null,
-            saved: null
+            saved: null,
+            groups: null
         };
         let collection = await db.collection("users");
         let result = await collection.insertOne(newUser);
@@ -107,10 +108,33 @@ router.put("/:username/saves", async (req, res) => {
     }
 });
 
+router.put("/:username/groups", async (req, res) => {
+    try {
+        const { username } = req.params;
+        const { groups } = req.body;
+
+        const collection = await db.collection("users");
+        const result = await collection.updateOne(
+            { username },
+            { $set: { groups } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).send("User not found");
+        }
+
+        res.status(200).send("User updated successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating user");
+    }
+});
+
+
 router.put("/:username", async (req, res) => {
     try {
         const { username } = req.params;
-        const { name , email , location, about, picture } = req.body;
+        const { name , email , location, about, picture, } = req.body;
 
         const collection = await db.collection("users");
         const result = await collection.updateOne(

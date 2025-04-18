@@ -36,6 +36,7 @@ const profileEmail = document.getElementById('profile-email');
 const profileLocation = document.getElementById('profile-location');
 const profileAbout = document.getElementById('profile-about');
 const profilePicture = document.getElementById('profile-picture');
+const editPicture = document.getElementById('edit-picture');
 
 const editButton = document.getElementById('edit-button');
 const saveButton = document.getElementById('save-button');
@@ -69,7 +70,7 @@ const updateUser = async (updatedUser) => {
 
 document.addEventListener("DOMContentLoaded", fetchPosts);
 
-function loadProfile() {
+async function loadProfile() {
     let user = JSON.parse(localStorage.getItem('User'));
     if (user) {
         // Populate profile fields with the user data
@@ -77,7 +78,7 @@ function loadProfile() {
         profileEmail.textContent = user.email || 'No email available';
         profileLocation.textContent = user.location || 'No location available';
         profileAbout.textContent = user.about || 'No about information available';
-         profilePicture.src = user.picture || 'default-picture.jpg'; // Use a default image if not available
+        profilePicture.src = user.picture || 'default-picture.jpg'; // Use a default image if not available
     } else {
         console.warn('No user data found in localStorage.');
     }
@@ -160,6 +161,8 @@ const displayPosts = (posts) => {
 function editProfile() {
     if (editing) return; // Prevent multiple edit states
     editing = true;
+    const imageInput = $("profile-picture");
+    console.log(imageInput);
 
     // Save original data
     originalData = {
@@ -167,13 +170,14 @@ function editProfile() {
         email: profileEmail.textContent,
         location: profileLocation.textContent,
         about: profileAbout.textContent,
-        picture: profilePicture.src
+        picture: profilePicture.textContent
     };
 
     // Convert profile fields to editable inputs
     profileName.innerHTML = `<input type="text" id="edit-name" value="${originalData.name}">`;
     profileEmail.innerHTML = `<input type="email" id="edit-email" value="${originalData.email}">`;
     profileLocation.innerHTML = `<input type="text" id="edit-location" value="${originalData.location}">`;
+    profilePicture.innerHTML = `<input type="img" id="profile-picture" value="${originalData.picture}">`;
     profileAbout.innerHTML = `<textarea id="edit-about">${originalData.about}</textarea>`;
     
     // Enable profile picture upload
@@ -183,40 +187,44 @@ function editProfile() {
     editButton.style.display = 'none';
 }
 
-function saveProfile() {
+async function saveProfile() {
     if (!editing) return;
-
+    const imageInput = $("#edit-picture");
+    const file = imageInput.files[0];
+    if (file.size >60000) {
+        alert(`Image is too large.`);
+    } else {
+        console.log("Image size is OK!");
+    }
+    const base64 = await convertToBase64(file);
     // Get updated data from inputs
     const updatedData = {
         name: document.getElementById('edit-name').value,
         email: document.getElementById('edit-email').value,
         location: document.getElementById('edit-location').value,
-        about: document.getElementById('edit-about').value
+        about: document.getElementById('edit-about').value,
+        picture: base64
     };
 
     // Check for uploaded picture
-    const pictureInput = document.getElementById('edit-picture');
-    if (pictureInput && pictureInput.files[0]) {
+    if (imageInput && file) {
         const reader = new FileReader();
         reader.onload = function (e) {
             updatedData.picture = e.target.result;
             applyProfileData(updatedData);
         };
-        reader.readAsDataURL(pictureInput.files[0]);
+        reader.readAsDataURL(file);
     } else {
         updatedData.picture = profilePicture.src;
         applyProfileData(updatedData);
     }
 
-    // Remove the picture input after saving
-    if (pictureInput) {
-        pictureInput.remove();
-    }
-
+    
     editing = false;
     saveButton.style.display = 'none';
     cancelButton.style.display = 'none';
     editButton.style.display = 'inline';
+    location.reload();
 }
 
 
@@ -249,10 +257,26 @@ function applyProfileData(data) {
     user.location = data.location;
     profileAbout.textContent = data.about;
     user.about = data.about;
-    profilePicture.src = data.picture;
+    profilePicture.textContent = data.picture;
     user.picture = data.picture;
     console.log(user);
+    
 
+    
     localStorage.setItem('User', JSON.stringify(user));
     updateUser(user);
+}
+
+
+function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error);
+        }
+    })
 }
