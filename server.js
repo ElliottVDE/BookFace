@@ -1,9 +1,9 @@
 import express from"express";
 import cors from "cors";
 import mongoose from "mongoose";
-import posts from "./server/routes/post.js";
-import users from "./server/routes/user.js";
-import groups from "./server/routes/groups.js";
+import posts from "./client/server/routes/post.js";
+import users from "./client/server/routes/user.js";
+import groups from "./client/server/routes/groups.js";
 const PORT = process.env.PORT || 5050;
 const app = express();
 // const groupRoutes = require('./server/routes/groups');
