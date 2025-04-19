@@ -1,13 +1,19 @@
 "use strict";
 let users = [];
 
+
 const fetchUsers = () => {
-  fetch('http://localhost:5050/user')
+  const API_BASE = location === 'localhost'
+  ? 'http://localhost:5050'
+  : 'https://bookface-9q1u.onrender.com';
+
+  fetch(`${API_BASE}/user`)
   .then(response => response.json())
   .then(fetchedUsers => {
       // Update the posts array with the fetched data
       users = fetchedUsers;
       console.log(users);
+      
   })
   .catch(error => console.error("Error fetching users:", error));
 };
@@ -72,6 +78,7 @@ const logIn = () => {
   $(document).ready(() => {
     $("#login").submit(evt => {
       evt.preventDefault(); // Prevent the default form submission behavior
+      
       logIn();
     });
   });
