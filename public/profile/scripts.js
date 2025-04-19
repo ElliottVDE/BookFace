@@ -200,15 +200,16 @@ async function saveProfile() {
     if (!editing) return;
     const imageInput = $("#edit-picture");
     const file = imageInput.files[0];
-    const base64 = null;
+    let base64 = imageInput;
 
     if(file){
     if (file.size >60000) {
         alert(`Image is too large.`);
     } else {
         console.log("Image size is OK!");
+        base64 = await convertToBase64(file);
+
     }
-    base64 = await convertToBase64(file);
     }
     // Get updated data from inputs
     const updatedData = {
