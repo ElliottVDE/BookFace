@@ -11,6 +11,6 @@ git clone https://github.com/ElliottVDE/BookFace.git
 
 2. Open a console in the base project directory
 
-3. use 'npm start'
+3. use 'npm run server'
 
-4. run live server on public/index.html
+4. run live server on /public

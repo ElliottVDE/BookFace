@@ -3,6 +3,8 @@ import cors from "cors";
 import posts from './server/routes/post.js';
 import users from './server/routes/user.js';
 import groups from './server/routes/groups.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const PORT = process.env.PORT;
 const app = express();
 
@@ -13,8 +15,16 @@ app.use("/post", posts);
 app.use("/user", users);
 app.use("/groups", groups);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Start the express server
 app.listen(PORT, () => {
     console.log(`Server listening on http://localhost:${PORT}`);
 });
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
