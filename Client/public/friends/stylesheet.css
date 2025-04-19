@@ -1,0 +1,267 @@
+/* Root Variables */
+:root {
+    --primary-color: #4267B2; /* Facebook blue */
+    --secondary-color: #ffffff; /* White */
+    --background-color: #f0f2f5; /* Light grey */
+    --text-color: #333333; /* Dark grey */
+    --accent-color: #ffcc00; /* Gold */
+    --border-radius: 10px;
+    --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 6px 10px rgba(0, 0, 0, 0.15);
+    --transition-speed: 0.3s;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+/* Links */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Buttons */
+button, input[type="submit"], input[type="button"] {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    box-shadow: var(--shadow-default);
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    transform: translateY(-4px); /* Lift effect */
+    box-shadow: var(--shadow-hover);
+}
+
+button:active, input[type="submit"]:active, input[type="button"]:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-default);
+}
+
+/* Forms */
+form {
+    background: var(--secondary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-default);
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input[type="text"], form input[type="password"], form input[type="email"], form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+form textarea {
+    resize: none;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--secondary-color);
+    box-shadow: var(--shadow-default);
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: var(--secondary-color);
+    font-size: 16px;
+    transition: color var(--transition-speed);
+}
+
+.nav-links li a:hover {
+    color: var(--accent-color);
+}
+
+/* Sections */
+.section {
+    max-width: 900px;
+    margin: 20px auto;
+    background: var(--secondary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-default);
+}
+
+.section h2 {
+    margin-bottom: 15px;
+}
+
+/* Cards */
+.card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--secondary-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-default);
+    margin-bottom: 10px;
+}
+
+.card img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+/* Friends Tab */
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between friend cards */
+}
+
+.friend-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9; /* Light grey background for each friend card */
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-default);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed); /* Smooth hover effects */
+}
+
+/* Profile Image */
+.friend-card img {
+    width: 80px; /* Standardized image size */
+    height: 80px;
+    border-radius: 50%; /* Circle image */
+    border: 3px solid #4267B2; /* Blue border for emphasis */
+    margin-right: 15px;
+}
+
+/* Friend Name */
+.friend-card h4 {
+    background: #4267B2; /* Facebook blue background */
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0; /* Remove default margin */
+    flex-grow: 1; /* Allow name box to adjust dynamically */
+}
+
+/* Hover Effect for Cards */
+.friend-card:hover {
+    transform: translateY(-3px); /* Lift the card slightly */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 14px;
+}
+
+footer a {
+    color: var(--accent-color);
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .friend-card {
+        flex-direction: column; /* Stack image and name on smaller screens */
+        align-items: center;
+        text-align: center;
+    }
+
+    .friend-card img {
+        margin-right: 0; /* Remove horizontal spacing */
+        margin-bottom: 10px; /* Add vertical spacing */
+    }
+
+    .friend-card h4 {
+        width: 100%; /* Full width for smaller screens */
+    }
+}
