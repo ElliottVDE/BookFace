@@ -4,7 +4,11 @@ let posts = [];
 
 
 const fetchPosts = () => {
-    fetch('http://localhost:5050/post')
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+  
+    fetch(`${API_BASE}/post`)
         .then(response => response.json())
         .then(data => {
             const posts = data; // Update the posts array with the fetched data
@@ -21,7 +25,11 @@ const fetchPosts = () => {
 let username = localStorage.getItem('username');
 
 const fetchSaves = () => {
-  fetch(`http://localhost:5050/user/${username}`)
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+  
+  fetch(`${API_BASE}/user/${username}`)
   .then(response => response.json())
   .then(fetchedUser => {
       // Update the posts array with the fetched data
@@ -33,7 +41,11 @@ const fetchSaves = () => {
 };
 
 const fetchGroups = () => {
-    fetch('http://localhost:5050/groups')
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+  
+    fetch(`${API_BASE}/groups`)
         .then(response => response.json())
         .then(data => {
             const groups = data; // Update the posts array with the fetched data
@@ -48,7 +60,11 @@ const fetchGroups = () => {
         .catch(error => console.error("Error fetching posts:", error));
 };
 const fetchJoined= () => {
-    fetch('http://localhost:5050/groups')
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+  
+    fetch(`${API_BASE}/groups`)
         .then(response => response.json())
         .then(data => {
             const groups = data; // Update the posts array with the fetched data
@@ -64,8 +80,13 @@ const fetchJoined= () => {
 };
 
 const updateSaves = async (updatedSavedPosts) => {
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+  
+    fetch(`${API_BASE}/post`)
     try {
-        const response = await fetch(`http://localhost:5050/user/${username}/saves`, {
+        const response = await fetch(`${API_BASE}/user/${username}/saves`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -83,8 +104,11 @@ const updateSaves = async (updatedSavedPosts) => {
     }
 };
 const updateJoins = async (updatedGroups) => {
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
     try {
-        const response = await fetch(`http://localhost:5050/user/${username}/groups`, {
+        const response = await fetch(`${API_BASE}/user/${username}/groups`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -123,6 +147,9 @@ const addPost = async () => {
                     posted = true;
                 }
                 if (posted){
+                    const API_BASE = location === 'localhost'
+                    ? 'http://localhost:5050'
+                    : 'https://bookface-9q1u.onrender.com';
                     const base64 = await convertToBase64(imageInput.files[0]);
                     const post = {
                         name,
@@ -134,7 +161,7 @@ const addPost = async () => {
                     posts = JSON.parse(localStorage.getItem('posts') || '[]');
                     posts.push(post);
                     localStorage.setItem('posts', JSON.stringify(posts));
-                    fetch('http://localhost:5050/post', {
+                    fetch(`${API_BASE}/post`, {
                      method: 'POST',
                       headers: {
                      'Content-Type': 'application/json'
@@ -152,6 +179,9 @@ const addPost = async () => {
                     });
                 }
             } else {
+                const API_BASE = location === 'localhost'
+                ? 'http://localhost:5050'
+                : 'https://bookface-9q1u.onrender.com';
                 const post = {
                     name,
                     desc,
@@ -162,7 +192,7 @@ const addPost = async () => {
                 posts = JSON.parse(localStorage.getItem('posts') || '[]');
                 posts.push(post);
                 localStorage.setItem('posts', JSON.stringify(posts));
-                fetch('http://localhost:5050/post', {
+                fetch(`${API_BASE}/post`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -200,7 +230,9 @@ const addGroup = async () => {
                 var started;
                 const file = imageInput.files[0];
                 console.log(file);
-
+                const API_BASE = location === 'localhost'
+                ? 'http://localhost:5050'
+                : 'https://bookface-9q1u.onrender.com';
                 if (file.size > 60000) {
                     alert(`Image is too large.`);
                 } else {
@@ -220,7 +252,7 @@ const addGroup = async () => {
                     groups = JSON.parse(localStorage.getItem('groups') || '[]');
                     groups.push(group);
                     localStorage.setItem('groups', JSON.stringify(groups));
-                    fetch('http://localhost:5050/groups', {
+                    fetch(`${API_BASE}/groups`, {
                      method: 'POST',
                       headers: {
                      'Content-Type': 'application/json'
@@ -238,6 +270,9 @@ const addGroup = async () => {
                     });
                 }
             } else {
+                const API_BASE = location === 'localhost'
+                ? 'http://localhost:5050'
+                : 'https://bookface-9q1u.onrender.com';
                 const group = {
                     name,
                     desc,
@@ -249,7 +284,7 @@ const addGroup = async () => {
                 groups.push(group);
                 localStorage.setItem('groups', JSON.stringify(groups));
                 console.log(group);
-                fetch('http://localhost:5050/groups', {
+                fetch(`${API_BASE}/groups`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -610,7 +645,10 @@ const displayPosts = (posts) => {
 }
 
 function queryGroup(id) {
-    fetch(`http://localhost:5050/groups/${id}`)
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+    fetch(`${API_BASE}/groups/${id}`)
     .then(response => response.json())
     .then(fetchedUser => {
         // Update the posts array with the fetched data

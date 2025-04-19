@@ -12,7 +12,7 @@ const fetchUsers = () => {
   .then(fetchedUsers => {
       // Update the posts array with the fetched data
       users = fetchedUsers;
-      console.log(users);
+
       
   })
   .catch(error => console.error("Error fetching users:", error));

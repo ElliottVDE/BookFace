@@ -3,7 +3,10 @@ const $ = selector => document.querySelector(selector);
 let posts = [];
 
 const fetchPosts = () => {
-    fetch('http://localhost:5050/post')
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+    fetch(`${API_BASE}/post`)
         .then(response => response.json())
         .then(data => {
             const posts = data; // Update the posts array with the fetched data
@@ -19,7 +22,10 @@ const fetchPosts = () => {
 };
 
 const fetchUser = () => {
-  fetch(`http://localhost:5050/user/${username}`)
+    const API_BASE = location === 'localhost'
+    ? 'http://localhost:5050'
+    : 'https://bookface-9q1u.onrender.com';
+    fetch(`${API_BASE}/user/${username}`)
   .then(response => response.json())
   .then(fetchedUser => {
       // Update the posts array with the fetched data
@@ -47,7 +53,10 @@ let originalData = {}; // To store the original data for cancel functionality
 
 const updateUser = async (updatedUser) => {
     try {
-        const response = await fetch(`http://localhost:5050/user/${username}`, {
+        const API_BASE = location === 'localhost'
+        ? 'http://localhost:5050'
+        : 'https://bookface-9q1u.onrender.com';
+        const response = await fetch(`${API_BASE}/user/${username}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -191,12 +200,16 @@ async function saveProfile() {
     if (!editing) return;
     const imageInput = $("#edit-picture");
     const file = imageInput.files[0];
+    const base64 = null;
+
+    if(file){
     if (file.size >60000) {
         alert(`Image is too large.`);
     } else {
         console.log("Image size is OK!");
     }
-    const base64 = await convertToBase64(file);
+    base64 = await convertToBase64(file);
+    }
     // Get updated data from inputs
     const updatedData = {
         name: document.getElementById('edit-name').value,
