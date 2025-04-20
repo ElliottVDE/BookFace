@@ -19,37 +19,57 @@ const fetchUsers = () => {
 };
 
 const logIn = () => {
-    //TODO: Implement for log-ins in db when SQL is implemented
-    //const u1 = "admin";
-    //const u2 = "teacherman";
-    //const p1 = "admin";
-    //const p2 = "password";
-
-    let verified = false;
-    let x = $("#username").val();
-    let y = $("#password").val();
-  
-    if (x.trim() === "" || y.trim() === "") {
-      document.getElementById("usernameError").textContent = "Please enter a username and password"
-      document.getElementById("passwordError").textContent = "Please enter a username and password"
-    return;
-      
+  let verified = false;
+  let x = $("#username").val();
+  let y = $("#password").val();
+    
+  if (x.trim() === "" || y.trim() === "") {
+    document.getElementById("usernameError").textContent = "Please enter a username and password"
+    document.getElementById("passwordError").textContent = "Please enter a username and password"
+  return;
+    
+  }
+  fetch(`${API_BASE}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username: x.trim(), password: y.trim() })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      // Login success
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('username', x.trim());
+      location.assign("Home/index.html");
+    } else {
+      // Login failed
+      alert(data.message || "Username or password incorrect.");
     }
-    users.forEach(user => {
-      if(x === user.username && y === user.password){
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('username', user.username)
-        verified = true;
-        location.assign("Home/index.html");
-        document.getElementById("usernameError").textContent = "";
-        document.getElementById("passwordError").textContent = "";
-        $("#username").val("");
-        $("#password").val("");
-      };
-    });
-      if(verified === false) {
-        alert("Username or password incorrect.");
-      };
+  })
+  .catch(err => {
+    console.error("Login error:", err);
+    alert("Something went wrong. Try again.");
+  });
+
+  
+
+    // users.forEach(user => {
+    //   if(x.trim() === user.username && y.trim() === user.password){
+    //     localStorage.setItem('loggedIn', 'true');
+    //     localStorage.setItem('username', user.username)
+    //     verified = true;
+    //     location.assign("Home/index.html");
+    //     document.getElementById("usernameError").textContent = "";
+    //     document.getElementById("passwordError").textContent = "";
+    //     $("#username").val("");
+    //     $("#password").val("");
+    //   };
+    // });
+    //   if(verified === false) {
+    //     alert("Username or password incorrect.");
+    //   };
 
     // if (x === u1 && y === p1) {
     //   localStorage.setItem('loggedIn', 'true');
