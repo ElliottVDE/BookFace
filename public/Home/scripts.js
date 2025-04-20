@@ -132,6 +132,7 @@ const addPost = async () => {
     const desc = $("#description").value.trim();
     const imageInput = $("#image");
     const groupID = $("#groupID").value.trim();
+    const groupName = groupID.replace(/\s+/g, "");  // removes all whitespace
 
     if (name) {
         if (desc) {
@@ -155,7 +156,7 @@ const addPost = async () => {
                         name,
                         desc,
                         image: base64,
-                        groupID
+                        groupName
                     };
                     console.log(post);
                     posts = JSON.parse(localStorage.getItem('posts') || '[]');
@@ -186,7 +187,7 @@ const addPost = async () => {
                     name,
                     desc,
                     image: null,
-                    groupID
+                    groupName
                 };
                 console.log(post);
                 posts = JSON.parse(localStorage.getItem('posts') || '[]');
