@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
             return res.status(404).json({message: "User not found"});
         }
         
-        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);
         console.log(isPasswordCorrect);
         if (!isPasswordCorrect) {
             return res.status(401).json({message: "Invalid username or password"});
