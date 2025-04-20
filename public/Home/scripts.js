@@ -34,7 +34,7 @@ const fetchSaves = () => {
   .then(fetchedUser => {
       // Update the posts array with the fetched data
       const user = fetchedUser;
-      const savedPosts = JSON.stringify(user.saved);
+      const savedPosts = user.saved;
       localStorage.setItem('savedPosts', savedPosts);
   })
   .catch(error => console.error("Error fetching users:", error));

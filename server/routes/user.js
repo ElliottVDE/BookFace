@@ -71,13 +71,11 @@ router.post("/login", async (req, res) => {
         const { username, password } = req.body;
         let collection = await db.collection("users");
         let user = await collection.findOne({ username: username });
-        console.log(user);
         if (!user) {
             return res.status(404).json({message: "User not found"});
         }
         
         const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);
-        console.log(isPasswordCorrect);
         if (!isPasswordCorrect) {
             return res.status(401).json({message: "Invalid username or password"});
         } else {
