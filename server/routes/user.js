@@ -47,18 +47,18 @@ router.post("/", async (req, res) => {
         const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 
         let newUser = {
-            username: username,
+            username: user.username,
             hashedPassword: hashedPassword,
-            email: email,
-            name: name,
-            location: location,
-            about: about,
-            picture: picture,
-            saved: saved,
-            groups: groups
+            email: user.email,
+            name: user.name,
+            location: user.location,
+            about: user.about,
+            picture: user.picture,
+            saved: user.saved,
+            groups: user.groups
         };
         let collection = await db.collection("users");
-        let result = await collection.insertOne(user);
+        let result = await collection.insertOne(newUser);
         res.status(201).send(result);
     } catch (err) {
         console.error(err);
