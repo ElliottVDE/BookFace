@@ -77,8 +77,10 @@ $(document).ready( () => {
                 savedPosts
             };
 
-            // Send user to server to update the JSON file
-            fetch('http://localhost:5050/user', {
+            const API_BASE = location === 'localhost'
+            ? 'http://localhost:5050'
+            : 'https://bookface-9q1u.onrender.com';
+            fetch(`${API_BASE}/user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
