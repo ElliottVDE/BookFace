@@ -31,7 +31,7 @@ const logIn = () => {
   const API_BASE = location.hostname === 'localhost'
     ? 'http://127.0.0.1:5050'
     : 'https://bookface-9q1u.onrender.com';
-  fetch(`${API_BASE}/login`, {
+  fetch(`${API_BASE}/user/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
