@@ -62,7 +62,7 @@ async function authenticateUserName(username){
         // Check if the response is not OK (e.g., status 404, 500, etc.)
         if (!response.ok) {
             const errorText = await response.text(); // Get raw text (e.g., "Not Found")
-            console.error('Error from server:', errorText); // Log error to console
+            document.getElementById("userError").textContent = errorText;
             // Handle error cases based on status
             if (response.status === 404) {
                 document.getElementById("userError").textContent = "Username not found.";
@@ -78,12 +78,11 @@ async function authenticateUserName(username){
         if (contentType && contentType.includes("application/json")) {
             // Parse JSON only if the response is JSON
             const data = await response.json(); 
-            console.log(data); // Log the response data
     
             // If data is empty or does not contain the expected properties, handle as not found
-            if (data || Object.keys(data).length === 0) {
-                document.getElementById("userError").textContent = "Please choose a new username (No spaces or special characters)";
-                return false;
+            if (data.message == "Username is available") {
+                document.getElementById("userError").textContent = "";
+                return true;
             }
     
             // If the data is valid, clear any error message
