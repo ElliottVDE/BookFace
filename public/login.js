@@ -27,8 +27,10 @@ const logIn = () => {
     document.getElementById("usernameError").textContent = "Please enter a username and password"
     document.getElementById("passwordError").textContent = "Please enter a username and password"
   return;
-    
   }
+  const API_BASE = location.hostname === 'localhost'
+    ? 'http://127.0.0.1:5050'
+    : 'https://bookface-9q1u.onrender.com';
   fetch(`${API_BASE}/login`, {
     method: "POST",
     headers: {
