@@ -315,7 +315,7 @@ const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
     let saves = [];
     postsContainer.innerHTML = ""; // Clear previous posts
-    saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
+    saves = localStorage.getItem("savedPosts") || [];
     let joins = localStorage.getItem("joinedGroups") || [];
     // let joins2 = JSON.parse(localStorage.getItem("joinedGroups")) || [];
     // let updatedJoins = [new Set(joins)];
