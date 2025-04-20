@@ -40,7 +40,7 @@ const logIn = () => {
   })
   .then(res => res.json())
   .then(data => {
-    if (data.success) {
+    if (data.user) {
       // Login success
       localStorage.setItem('loggedIn', 'true');
       localStorage.setItem('username', x.trim());
