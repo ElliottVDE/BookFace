@@ -156,7 +156,7 @@ const addPost = async () => {
                         name,
                         desc,
                         image: base64,
-                        groupName
+                        groupID: groupName
                     };
                     console.log(post);
                     posts = JSON.parse(localStorage.getItem('posts') || '[]');
