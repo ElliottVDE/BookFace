@@ -21,34 +21,45 @@ router.get("/", async (req, res) => {
 // });
 
 router.get("/:username", async (req, res) => {
-    let collection = await db.collection("users");
-    let query = { username: req.params.username };
-    let result = await collection.findOne(query);
+    try {
+        const collection = await db.collection("users");
+        const query = { username: req.params.username };
+        const existingUser = await collection.findOne(query);
 
-    if (!result) res.send("Not Found").status(404);
-    else res.send(result).status(200);
+        if (existingUser) {
+            // Username is already taken
+            return res.status(409).json({ message: "Username is already taken" });
+        } else {
+            // Username is available
+            return res.status(200).json({ message: "Username is available" });
+        }
+    } catch (error) {
+        console.error("Error checking username:", error);
+        return res.status(500).json({ message: "Server error" }); // 500 for server-side errors
+    }
 });
 
 router.post("/", async (req, res) => {
     try {
-        const { username, password, email } = req.body;
+        const user = req.body;
+        const saltRounds = 10;
 
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        const hashedPassword = password;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
         let newUser = {
             username: username,
-            password: hashedPassword,
+            hashedPassword: hashedPassword,
             email: email,
-            name: "John Doe",
-            location: "New York, USA",
-            about: "Description...",
-            picture: null,
-            saved: null,
-            groups: null
+            name: name,
+            location: location,
+            about: about,
+            picture: picture,
+            saved: saved,
+            groups: groups
         };
         let collection = await db.collection("users");
-        let result = await collection.insertOne(newUser);
-        res.send(result).status(204);
+        let result = await collection.insertOne(user);
+        res.status(201).send(result);
     } catch (err) {
         console.error(err);
         res.status(500).send("Error adding user");
@@ -69,6 +80,8 @@ router.post("/login", async (req, res) => {
 
         if (!isPasswordCorrect) {
             return res.status(401).json({message: "Invalid username or password"});
+        } else {
+           return res.send({ message: 'Login successful!' });
         }
 
         // Create a JWT token (Optional: use your secret key in place of 'your_jwt_secret')

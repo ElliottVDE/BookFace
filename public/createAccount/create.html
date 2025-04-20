@@ -11,36 +11,48 @@
 <body>
     <div id="navbar-container"></div>
     
-    <form action="../Home/index.html" method="get"
-    	name="login" id="login">
+    <form action="" method="post"e
+    name="login" id="login">
 
-      <legend>Account Information: </legend>
+  <div id="login" class="section">
+    <legend>Account Information: </legend>
       <fieldset>
-              <div>
-          <label for="email">Email Address:</label>
-          <input type="text" name="email" id="email">
-          <span id="emailError">*</span>
-        </div>
-        <div>
-          <label for="uname">Username:</label>
-          <input type="text" name="uname" id="uname">
-          <span id="userError">*</span>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" name="password" id="password" placeholder="">
-          <span id="passError">*</span>
-        </div>
-        <div>
-          <label for="repassword">Re-Enter Password:</label>
-          <input type="password" name="repassword" id="repassword" placeholder="">
-          <span id="repassError">*</span>
-        </div>
-        <input type="submit" id="submit" value="Create Account">
-        <a href="../index.html"> 
-          <input type="button" id="back" value="Back">
-          </a>
-      </fieldset>
+        <h1>Register</h1>
+          <div>
+            <label for="email">Email Address:</label>
+            <input type="text" name="email" id="email">
+            <span id="emailError">*</span>
+          </div>
+          <div>
+            <label for="uname">Username:</label>
+            <input type="text" name="uname" id="uname">
+            <span id="userError">*</span>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="">
+            <span id="passwordError">*</span>
+          </div>
+          <div>
+            <label for="repassword">Re-Enter Password:</label>
+            <input type="password" name="repassword" id="repassword" placeholder="">
+            <span id="repassError">*</span>
+          </div>
+          <div>
+            <label for="name">Enter your Name:</label>
+            <input type="text" name="name" id="name">
+            <span id="nameError">*</span>
+          </div>
+          <div>
+            <input type="submit" id="submit" value="Create Account">
+            <a href="../index.html"> 
+              <input type="button" id="back" value="Back">
+            </a>
+          </div>
+        </fieldset>
+      </form>
+  </div>
+
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="create.js"></script>
@@ -54,6 +66,6 @@
     </script>
 </body>
 <footer>
-    <p>&copy; 2024 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
+    <p>&copy; 2025 BookFace | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Us</a></p>
 </footer>
 </html>
