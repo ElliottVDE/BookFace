@@ -91,7 +91,7 @@ const updateSaves = async (updatedSavedPosts) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ saved: updatedSavedPosts })
+            body: updatedSavedPosts
         });
 
         if (!response.ok) {
@@ -398,7 +398,7 @@ const displayPosts = (posts) => {
             saveButton.textContent = isSaved ? "Saved" : "Save";
             saveButton.classList.toggle("saved", isSaved);
 
-            saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
+            saves = localStorage.getItem("savedPosts") || [];
 
             if(isSaved){
                 if (!saves.includes(post._id)) {
@@ -420,7 +420,7 @@ const displayPosts = (posts) => {
 
             }
 
-            localStorage.setItem('savedPosts', JSON.stringify(saves));
+            localStorage.setItem('savedPosts', saves);
             updateSaves(saves);
             });
         joinButton.addEventListener("click", () => {
