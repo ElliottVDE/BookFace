@@ -100,7 +100,7 @@ const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
     let saves = [];
     postsContainer.innerHTML = ""; // Clear previous posts
-    saves = localStorage.getItem("savedPosts") || [];
+    saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
     const savedPosts = posts.filter(post => saves.includes(post._id));
     console.log(savedPosts);
     savedPosts.slice().reverse().forEach(post => {

@@ -34,7 +34,7 @@ const fetchSaves = () => {
   .then(fetchedUser => {
       // Update the posts array with the fetched data
       const user = fetchedUser;
-      const savedPosts = user.saved;
+      const savedPosts = JSON.stringify(user.saved);
       localStorage.setItem('savedPosts', savedPosts);
   })
   .catch(error => console.error("Error fetching users:", error));
@@ -91,7 +91,7 @@ const updateSaves = async (updatedSavedPosts) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: updatedSavedPosts
+            body: JSON.stringify({ saved: updatedSavedPosts })
         });
 
         if (!response.ok) {
@@ -315,7 +315,7 @@ const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
     let saves = [];
     postsContainer.innerHTML = ""; // Clear previous posts
-    saves = localStorage.getItem("savedPosts") || [];
+    saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
     let joins = localStorage.getItem("joinedGroups") || [];
     // let joins2 = JSON.parse(localStorage.getItem("joinedGroups")) || [];
     // let updatedJoins = [new Set(joins)];
@@ -398,7 +398,7 @@ const displayPosts = (posts) => {
             saveButton.textContent = isSaved ? "Saved" : "Save";
             saveButton.classList.toggle("saved", isSaved);
 
-            saves = localStorage.getItem("savedPosts") || [];
+            saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
 
             if(isSaved){
                 if (!saves.includes(post._id)) {
@@ -420,7 +420,7 @@ const displayPosts = (posts) => {
 
             }
 
-            localStorage.setItem('savedPosts', saves);
+            localStorage.setItem('savedPosts', JSON.stringify(saves));
             updateSaves(saves);
             });
         joinButton.addEventListener("click", () => {
