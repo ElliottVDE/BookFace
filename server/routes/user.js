@@ -38,6 +38,24 @@ router.get("/:username", async (req, res) => {
         return res.status(500).json({ message: "Server error" }); // 500 for server-side errors
     }
 });
+router.get("/profile/:username", async (req, res) => {
+    try {
+        const collection = await db.collection("users");
+        const query = { username: req.params.username };
+        const existingUser = await collection.findOne(query);
+
+        if (existingUser) {
+
+            return res.status(200).json(existingUser);
+        } else {
+            // Username is available
+            return res.status(404).json({ message: "User not found." });
+        }
+    } catch (error) {
+        console.error("Error checking username:", error);
+        return res.status(500).json({ message: "Server error" }); // 500 for server-side errors
+    }
+});
 
 router.post("/", async (req, res) => {
     try {
@@ -72,7 +90,7 @@ router.post("/login", async (req, res) => {
         let collection = await db.collection("users");
         let user = await collection.findOne({ username: username });
         if (!user) {
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({message: "Invalid username or password"});
         }
         
         const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);

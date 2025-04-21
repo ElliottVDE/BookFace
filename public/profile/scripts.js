@@ -25,7 +25,7 @@ const fetchUser = () => {
     const API_BASE = location === 'localhost'
     ? 'http://localhost:5050'
     : 'https://bookface-9q1u.onrender.com';
-    fetch(`${API_BASE}/user/${username}`)
+    fetch(`${API_BASE}/user/profile/${username}`)
   .then(response => response.json())
   .then(fetchedUser => {
       // Update the posts array with the fetched data
@@ -98,9 +98,17 @@ document.addEventListener("DOMContentLoaded", fetchUser);
 
 const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
+    let savedData = localStorage.getItem("savedPosts");
     let saves = [];
+    if (savedData) {
+        try {
+            saves = JSON.parse(savedData);
+        } catch (e) {
+            console.error("Failed to parse saved posts:", e);
+            saves = [];
+        }
+    }
     postsContainer.innerHTML = ""; // Clear previous posts
-    saves = JSON.parse(localStorage.getItem("savedPosts")) || [];
     const savedPosts = posts.filter(post => saves.includes(post._id));
     console.log(savedPosts);
     savedPosts.slice().reverse().forEach(post => {
