@@ -56,7 +56,7 @@ const fetchGroups = () => {
             //     console.error("Posts is not an array:", groups);
             //   }
             localStorage.setItem('groups', JSON.stringify(groups));
-            location.assign("Home/index.html")
+            location.assign("index.html")
         })
         .catch(error => console.error("Error fetching groups:", error));
 };
