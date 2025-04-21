@@ -547,14 +547,13 @@ const displayPosts = (posts) => {
 
     });
     // Create the break line
-    const br = document.createElement("br");
-
+    const spacer = document.createElement("div");
     // Create the header
     const header = document.createElement("h1");
     header.textContent = "Groups";
 
     // Append the header and break line before the postCard
-    postsContainer.appendChild(br);
+    postsContainer.appendChild(spacer);
     postsContainer.appendChild(header);
         // CREATE GROUPS TAB
 
