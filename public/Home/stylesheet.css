@@ -128,7 +128,7 @@ button:active {
     color: var(--primary-color);
 }
 
-#name, #description {
+#name, #gname, #gdescription, #description {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
