@@ -29,7 +29,7 @@ const fetchSaves = () => {
     ? 'http://localhost:5050'
     : 'https://bookface-9q1u.onrender.com';
   
-  fetch(`${API_BASE}/user/${username}`)
+  fetch(`${API_BASE}/user/profile/${username}`)
   .then(response => response.json())
   .then(fetchedUser => {
       // Update the posts array with the fetched data
