@@ -548,6 +548,8 @@ const displayPosts = (posts) => {
     });
     // Create the break line
     const spacer = document.createElement("div");
+    spacer.style.height = "20px"; 
+
     // Create the header
     const header = document.createElement("h1");
     header.textContent = "Groups";
