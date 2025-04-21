@@ -350,6 +350,8 @@ const addGroup = async () => {
 };
 
 const displayPosts = (posts) => {
+    const homeContainer = $("#homeContainer");
+    const groupsContainer = $("#groupsContainer");
     const postsContainer = $("#postsContainer");
     let saves = [];
     postsContainer.innerHTML = ""; // Clear previous posts
@@ -546,6 +548,7 @@ const displayPosts = (posts) => {
         postsContainer.appendChild(postCard);
 
     });
+    homeContainer.appendChild(postsContainer);
     // Create the break line
     const spacer = document.createElement("div");
     spacer.style.height = "20px"; 
@@ -555,9 +558,8 @@ const displayPosts = (posts) => {
     header.textContent = "Groups";
 
     // Append the header and break line before the postCard
-    postsContainer.appendChild(spacer);
-    postsContainer.appendChild(header);
-        // CREATE GROUPS TAB
+    homeContainer.appendChild(spacer);
+    homeContainer.appendChild(header);
 
     groups.slice().reverse().forEach(group => {
         let membership = [];
@@ -683,8 +685,9 @@ const displayPosts = (posts) => {
         });
 
     localStorage.setItem('joinedGroups', joins);
-    postsContainer.appendChild(groupCard);
+    groupsContainer.appendChild(groupCard);
     });
+    homeContainer.appendChild(groupsContainer);
 
 }
 
