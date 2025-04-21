@@ -48,16 +48,17 @@ const fetchGroups = () => {
     fetch(`${API_BASE}/groups`)
         .then(response => response.json())
         .then(data => {
-            const groups = data; // Update the posts array with the fetched data
+            const groups = data; 
+            // Update the posts array with the fetched data
             // if (Array.isArray(groups)) {
             //     displayGroups(groups);
             //   } else {
             //     console.error("Posts is not an array:", groups);
             //   }
             localStorage.setItem('groups', JSON.stringify(groups));
-                
+            location.assign("Home/index.html")
         })
-        .catch(error => console.error("Error fetching posts:", error));
+        .catch(error => console.error("Error fetching groups:", error));
 };
 const fetchJoined= () => {
     const API_BASE = location === 'localhost'
