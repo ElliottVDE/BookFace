@@ -173,6 +173,7 @@ const addPost = async () => {
                     .then(response => response.json())
                     .then(updatedPosts => {
                         console.log("Post saved on server:", updatedPosts);
+                        alert("Post saved!");
                         fetchPosts();
                     })
                     .catch(error => {
@@ -204,6 +205,7 @@ const addPost = async () => {
                 .then(response => response.json())
                 .then(updatedPosts => {
                     console.log("Post saved on server:", updatedPosts);
+                    alert("Post saved!");
                     fetchPosts();
                 })
                 .catch(error => {
@@ -264,6 +266,7 @@ const addGroup = async () => {
                     .then(response => response.json())
                     .then(updatedGroups => {
                         console.log("Group saved on server:", updatedGroups);
+                        alert("Group saved!");
                         fetchGroups();
                     })
                     .catch(error => {
@@ -279,7 +282,7 @@ const addGroup = async () => {
                     name,
                     desc,
                     members: null,
-                    image,
+                    image: null,
                     posts: null
                 };
                 groups = JSON.parse(localStorage.getItem('groups') || '[]');
@@ -296,6 +299,8 @@ const addGroup = async () => {
                 .then(response => response.json())
                 .then(updatedGroups => {
                     console.log("Group saved on server:", updatedGroups);
+                    alert("Group saved!");
+
                     fetchGroups();
                 })
                 .catch(error => {
