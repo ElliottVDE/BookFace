@@ -162,7 +162,7 @@ $(document).ready( () => {
             .then(data => {
                 console.log("User saved successfully:", data);
                 // ✅ Only redirect on success
-                // location.assign("../index.html");
+                location.assign("../index.html");
             })
             .catch(error => {
                 console.error("Error saving user on server:", error);

@@ -109,8 +109,20 @@ button:active {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-default);
 }
-
+#createGroup {
+    display: none; /* Initially hidden */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-default);
+}
 #createPost h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+#createGroup h1 {
     text-align: center;
     margin-bottom: 20px;
     color: var(--primary-color);
