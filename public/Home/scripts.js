@@ -148,7 +148,7 @@ const addPost = async () => {
                     console.log("Image size is OK!");
                     posted = true;
                 }
-                if (posted){
+                if (posted && groupName){
                     const API_BASE = location === 'localhost'
                     ? 'http://localhost:5050'
                     : 'https://bookface-9q1u.onrender.com';
@@ -181,7 +181,7 @@ const addPost = async () => {
                         alert("There was an error saving the post.");
                     });
                 }
-            } else {
+            } else if (!posted && groupName){
                 const API_BASE = location === 'localhost'
                 ? 'http://localhost:5050'
                 : 'https://bookface-9q1u.onrender.com';
@@ -190,6 +190,37 @@ const addPost = async () => {
                     desc,
                     image: null,
                     groupID: groupName
+                };
+                console.log(post);
+                posts = JSON.parse(localStorage.getItem('posts') || '[]');
+                posts.push(post);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                fetch(`${API_BASE}/post`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(post)
+                })
+                .then(response => response.json())
+                .then(updatedPosts => {
+                    console.log("Post saved on server:", updatedPosts);
+                    alert("Post saved!");
+                    fetchPosts();
+                })
+                .catch(error => {
+                    console.error("Error saving post on server:", error);
+                    alert("There was an error saving the post.");
+                });
+            } else if (!posted && !groupName){
+                const API_BASE = location === 'localhost'
+                ? 'http://localhost:5050'
+                : 'https://bookface-9q1u.onrender.com';
+                const post = {
+                    name,
+                    desc,
+                    image: null,
+                    groupID: null
                 };
                 console.log(post);
                 posts = JSON.parse(localStorage.getItem('posts') || '[]');
