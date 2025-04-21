@@ -558,8 +558,6 @@ const displayPosts = (posts) => {
     header.textContent = "Groups";
 
     // Append the header and break line before the postCard
-    homeContainer.appendChild(spacer);
-    homeContainer.appendChild(header);
 
     groups.slice().reverse().forEach(group => {
         let membership = [];
