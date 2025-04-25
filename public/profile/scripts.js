@@ -98,17 +98,25 @@ document.addEventListener("DOMContentLoaded", fetchUser);
 
 const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
-    let savedData = localStorage.getItem("savedPosts");
     let saves = [];
-    if (savedData) {
-        try {
-            saves = JSON.parse(savedData);
-        } catch (e) {
-            console.error("Failed to parse saved posts:", e);
-            saves = [];
-        }
+
+    try {
+      const raw = localStorage.getItem("savedPosts");
+      saves = raw && raw !== "undefined" && raw !== null ? JSON.parse(raw) : [];
+    } catch (e) {
+      saves = [];
     }
+    // if (savedData) {
+    //     try {
+    //         saves = JSON.parse(savedData);
+    //     } catch (e) {
+    //         console.error("Failed to parse saved posts:", e);
+    //         saves = [];
+    //     }
+    // }
     postsContainer.innerHTML = ""; // Clear previous posts
+    
+
     const savedPosts = posts.filter(post => saves.includes(post._id));
     console.log(savedPosts);
     savedPosts.slice().reverse().forEach(post => {

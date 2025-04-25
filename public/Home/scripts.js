@@ -142,12 +142,12 @@ const addPost = async () => {
                 const file = imageInput.files[0];
                 console.log(file);
 
-                if (file.size > 60000) {
-                    alert(`Image is too large.`);
-                } else {
-                    console.log("Image size is OK!");
+                // if (file.size > 60000) {
+                //     alert(`Image is too large.`);
+                // } else {
+                //     console.log("Image size is OK!");}
                     posted = true;
-                }
+                
                 if (posted && groupName){
                     const API_BASE = location === 'localhost'
                     ? 'http://localhost:5050'
@@ -440,7 +440,7 @@ const displayPosts = (posts) => {
 
             try {
               const raw = localStorage.getItem("savedPosts");
-              saves = raw && raw !== "undefined" ? JSON.parse(raw) : [];
+              saves = raw && raw !== "undefined" && raw !== null ? JSON.parse(raw) : [];
             } catch (e) {
               saves = [];
             }
