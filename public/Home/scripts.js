@@ -437,10 +437,11 @@ const displayPosts = (posts) => {
             isSaved = !isSaved;
             saveButton.textContent = isSaved ? "Saved" : "Save";
             saveButton.classList.toggle("saved", isSaved);
+            saves = localStorage.getItem("savedPosts") || [];
 
             try {
               const raw = localStorage.getItem("savedPosts");
-              saves = raw && raw !== "undefined" && raw !== null ? JSON.parse(raw) : [];
+              saves = raw && raw !== "undefined" && raw !== "null" ? JSON.parse(raw) : [];
             } catch (e) {
               saves = [];
             }
