@@ -35,9 +35,7 @@ const fetchSaves = () => {
       // Update the posts array with the fetched data
       const user = fetchedUser;
       const savedPosts = JSON.stringify(user.saved);
-      const admin = user.role;
       localStorage.setItem('savedPosts', savedPosts);
-      localStorage.setItem('role', admin);
   })
   .catch(error => console.error("Error fetching users:", error));
 };
@@ -410,7 +408,8 @@ const displayPosts = (posts) => {
     const groupsContainer = $("#groupsContainer");
     const postsContainer = $("#postsContainer");
     let saves = [];
-    let role = localStorage.getItem("role") || null;
+    const storedUser = JSON.parse(localStorage.getItem('User'));
+    const role = storedUser?.role;
     postsContainer.innerHTML = ""; // Clear previous posts
     saves = localStorage.getItem("savedPosts") || [];
     let joins = localStorage.getItem("joinedGroups") || [];
@@ -457,7 +456,7 @@ const displayPosts = (posts) => {
         if(post.groupID !== null){
             postHeader.appendChild(joinButton);
         }
-        if(role === 2 || role === 1){
+        if(role === 1 || role === 2){
             postHeader.appendChild(deleteButton);
         }
         postHeader.appendChild(saveButton);

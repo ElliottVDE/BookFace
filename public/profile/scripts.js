@@ -37,7 +37,8 @@ const fetchUser = () => {
           about: fetchedUser.about,
           groups: fetchedUser.groups,
           picture: fetchedUser.picture,
-          saved: fetchedUser.saved
+          saved: fetchedUser.saved,
+          role: fetchedUser.role
         };
   
         // Store the filtered object as a JSON string
