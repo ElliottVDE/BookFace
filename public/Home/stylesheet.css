@@ -226,7 +226,21 @@ input[type="file"]:hover {
     object-fit: cover;
     border-radius: var(--border-radius);
   }
+  
+  .delete-button {
+    background-color: transparent;
+    border: none;
+    color: #d00;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
 
+.delete-button:hover {
+    color: #a00;
+}
 /* Footer */
 footer {
     text-align: center;

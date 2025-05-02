@@ -85,14 +85,13 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const query = { _id: new ObjectId(req.params.id) };
-    
         const collection = db.collection("posts");
-        let result = await collection.deleteOne(query);
+        const result = await collection.deleteOne(query);
 
-        res.send(result).status(200);
+        res.status(200).send(result);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Error updating post");
+        res.status(500).send("Error deleting post");
     }
 });
 

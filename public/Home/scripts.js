@@ -35,7 +35,9 @@ const fetchSaves = () => {
       // Update the posts array with the fetched data
       const user = fetchedUser;
       const savedPosts = JSON.stringify(user.saved);
+      const admin = JSON.stringify(user.role);
       localStorage.setItem('savedPosts', savedPosts);
+      localStroage.setItem('role', admin);
   })
   .catch(error => console.error("Error fetching users:", error));
 };
@@ -125,6 +127,26 @@ const updateJoins = async (updatedGroups) => {
         console.log("Saved groups:" + updatedGroups);
     } catch (error) {
         console.error("Error updating saved groups:", error);
+    }
+};
+
+const deletePost = async (ID) => {
+    const API_BASE = location.hostname === 'localhost'
+        ? 'http://localhost:5050'
+        : 'https://bookface-9q1u.onrender.com';
+
+    try {
+        const response = await fetch(`${API_BASE}/post/${ID}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete post");
+        }
+
+        alert("Post deleted!");
+    } catch (error) {
+        console.error("Error deleting post:", error);
     }
 };
 
@@ -388,6 +410,7 @@ const displayPosts = (posts) => {
     const groupsContainer = $("#groupsContainer");
     const postsContainer = $("#postsContainer");
     let saves = [];
+    let role = localStorage.getItem("role") || null;
     postsContainer.innerHTML = ""; // Clear previous posts
     saves = localStorage.getItem("savedPosts") || [];
     let joins = localStorage.getItem("joinedGroups") || [];
@@ -396,35 +419,50 @@ const displayPosts = (posts) => {
     groups = JSON.parse(localStorage.getItem("groups"));
 
     posts.slice().reverse().forEach(post => {
+
         const postCard = document.createElement("div");
         postCard.classList.add("post-card");
         isSaved = saves.includes(post._id);
         joined = joins.includes(post.groupID);
+
         // Post header (name)
         const postHeader = document.createElement("div");
         postHeader.classList.add("post-header");
         postHeader.textContent = post.name;
-        // Show More / Less Button
+
+        // Save Button
         const saveButton = document.createElement("button");
         saveButton.textContent = isSaved ? "Saved" : "Save";
         saveButton.classList.add("toggle-button");
-        // saveButton.classList.toggle("saved", isSaved);
         
+        // Delete Button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "&times;"; // HTML entity for 'X'
+        deleteButton.classList.add("delete-button");
+        deleteButton.title = "Delete Post";
+        
+        deleteButton.addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete this post?")) {
+                deletePost(post._id); // Delete with confirm Button
+            }
+        });
+        
+        // Join Button
         const joinButton = document.createElement("button");
         joinButton.textContent = joined ? "Leave" : "Join";
         joinButton.classList.add("toggle-button");
 
+
+        // Appending the post Header and Buttons
         if(post.groupID !== null){
             postHeader.appendChild(joinButton);
+        }
+        if(role === 2 || role === 1){
+            postHeader.appendChild(deleteButton);
         }
         postHeader.appendChild(saveButton);
         postCard.appendChild(postHeader);
 
-        // if(post.groupID){
-
-        // } else {
-
-        // }
         // Description logic
         const fullText = post.desc;
         const shortText = fullText.slice(0, 80);
