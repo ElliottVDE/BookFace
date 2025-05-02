@@ -37,7 +37,7 @@ const fetchSaves = () => {
       const savedPosts = JSON.stringify(user.saved);
       const admin = user.role;
       localStorage.setItem('savedPosts', savedPosts);
-      localStroage.setItem('role', admin);
+      localStorage.setItem('role', admin);
   })
   .catch(error => console.error("Error fetching users:", error));
 };
