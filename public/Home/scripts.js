@@ -142,10 +142,10 @@ const addPost = async () => {
                 const file = imageInput.files[0];
                 console.log(file);
 
-                // if (file.size > 60000) {
-                //     alert(`Image is too large.`);
-                // } else {
-                //     console.log("Image size is OK!");}
+                if (file.size > 75000) {
+                    alert(`Image needs to be under 75 KB in size.`);
+                } else {
+                    console.log("Image size is OK!");}
                     posted = true;
                 
                 if (posted && groupName){
@@ -181,45 +181,14 @@ const addPost = async () => {
                         alert("There was an error saving the post.");
                     });
                 }
-            } else if (!posted && groupName){
+                else if (posted && !groupName){
                 const API_BASE = location === 'localhost'
                 ? 'http://localhost:5050'
                 : 'https://bookface-9q1u.onrender.com';
                 const post = {
                     name,
                     desc,
-                    image: null,
-                    groupID: groupName
-                };
-                console.log(post);
-                posts = JSON.parse(localStorage.getItem('posts') || '[]');
-                posts.push(post);
-                localStorage.setItem('posts', JSON.stringify(posts));
-                fetch(`${API_BASE}/post`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post)
-                })
-                .then(response => response.json())
-                .then(updatedPosts => {
-                    console.log("Post saved on server:", updatedPosts);
-                    alert("Post saved!");
-                    fetchPosts();
-                })
-                .catch(error => {
-                    console.error("Error saving post on server:", error);
-                    alert("There was an error saving the post.");
-                });
-            } else if (!posted && !groupName){
-                const API_BASE = location === 'localhost'
-                ? 'http://localhost:5050'
-                : 'https://bookface-9q1u.onrender.com';
-                const post = {
-                    name,
-                    desc,
-                    image: null,
+                    image: base64,
                     groupID: null
                 };
                 console.log(post);
@@ -243,6 +212,71 @@ const addPost = async () => {
                     console.error("Error saving post on server:", error);
                     alert("There was an error saving the post.");
                 });
+                } 
+            } else {           
+                if (groupName){
+                    const API_BASE = location === 'localhost'
+                    ? 'http://localhost:5050'
+                    : 'https://bookface-9q1u.onrender.com';
+                    const post = {
+                        name,
+                        desc,
+                        image: null,
+                        groupID: groupName
+                    };
+                    console.log(post);
+                    posts = JSON.parse(localStorage.getItem('posts') || '[]');
+                    posts.push(post);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    fetch(`${API_BASE}/post`, {
+                     method: 'POST',
+                      headers: {
+                     'Content-Type': 'application/json'
+                    },
+                        body: JSON.stringify(post)
+                    })
+                    .then(response => response.json())
+                    .then(updatedPosts => {
+                        console.log("Post saved on server:", updatedPosts);
+                        alert("Post saved!");
+                        fetchPosts();
+                    })
+                    .catch(error => {
+                        console.error("Error saving post on server:", error);
+                        alert("There was an error saving the post.");
+                    });
+                } else {
+                    const API_BASE = location === 'localhost'
+                    ? 'http://localhost:5050'
+                    : 'https://bookface-9q1u.onrender.com';
+                    const post = {
+                        name,
+                        desc,
+                        image: null,
+                        groupID: null
+                    };
+                    console.log(post);
+                    posts = JSON.parse(localStorage.getItem('posts') || '[]');
+                    posts.push(post);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    fetch(`${API_BASE}/post`, {
+                     method: 'POST',
+                      headers: {
+                     'Content-Type': 'application/json'
+                    },
+                        body: JSON.stringify(post)
+                    })
+                    .then(response => response.json())
+                    .then(updatedPosts => {
+                        console.log("Post saved on server:", updatedPosts);
+                        alert("Post saved!");
+                        fetchPosts();
+                    })
+                    .catch(error => {
+                        console.error("Error saving post on server:", error);
+                        alert("There was an error saving the post.");
+                    });
+                }
             }
         } else {
             alert("Description is required.");
@@ -268,8 +302,8 @@ const addGroup = async () => {
                 const API_BASE = location === 'localhost'
                 ? 'http://localhost:5050'
                 : 'https://bookface-9q1u.onrender.com';
-                if (file.size > 60000) {
-                    alert(`Image is too large.`);
+                if (file.size > 75000) {
+                    alert(`Image needs to be under 75 KB in size.`);
                 } else {
                     console.log("Image size is OK!");
                     started = true;
