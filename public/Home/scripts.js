@@ -463,7 +463,6 @@ const displayPosts = (posts) => {
         deleteButton.addEventListener("click", () => {
             if (confirm("Are you sure you want to delete this post?")) {
                 deletePost(post._id); // Delete with confirm Button
-                location.reload();
             }
         });
         
@@ -701,7 +700,6 @@ const displayPosts = (posts) => {
         deleteButton.addEventListener("click", () => {
             if (confirm("Are you sure you want to delete this group?")) {
                 deleteGroup(group._id); // Delete with confirm Button
-                location.reload();
             }
         });
 
@@ -794,7 +792,6 @@ const displayPosts = (posts) => {
         
                     localStorage.setItem('joinedGroups', joins);
                     updateJoins(joins);
-                    // location.reload();
         });
 
     localStorage.setItem('joinedGroups', joins);
