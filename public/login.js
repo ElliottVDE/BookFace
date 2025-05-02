@@ -54,46 +54,6 @@ const logIn = () => {
     console.error("Login error:", err);
     alert("Something went wrong. Try again.");
   });
-
-  
-
-    // users.forEach(user => {
-    //   if(x.trim() === user.username && y.trim() === user.password){
-    //     localStorage.setItem('loggedIn', 'true');
-    //     localStorage.setItem('username', user.username)
-    //     verified = true;
-    //     location.assign("Home/index.html");
-    //     document.getElementById("usernameError").textContent = "";
-    //     document.getElementById("passwordError").textContent = "";
-    //     $("#username").val("");
-    //     $("#password").val("");
-    //   };
-    // });
-    //   if(verified === false) {
-    //     alert("Username or password incorrect.");
-    //   };
-
-    // if (x === u1 && y === p1) {
-    //   localStorage.setItem('loggedIn', 'true');
-    //   localStorage.setItem("username",u1);
-    //   localStorage.setItem("password",p1);
-    //   location.assign("../Home/index.html");
-    //   document.getElementById("usernameError").textContent = "";
-    //   document.getElementById("passwordError").textContent = "";
-    //   $("#username").val("");
-    //   $("#password").val("");
-    // } else if (x ===u2 && y ===p2) {
-    //   localStorage.setItem('loggedIn', 'true');
-    //   localStorage.setItem("username",u2);
-    //   localStorage.setItem("password",p2);
-    //   location.assign('../Home/index.html');
-    //   document.getElementById("usernameError").textContent = "";
-    //   document.getElementById("passwordError").textContent = "";
-    //   $("#username").val("");
-    //   $("#password").val("");
-    // } else{
-    //   alert("Username or password incorrect.");
-    // }
   }
 
   document.addEventListener("DOMContentLoaded", fetchUsers);

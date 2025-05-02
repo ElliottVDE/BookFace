@@ -22,19 +22,29 @@ const fetchPosts = () => {
 };
 
 const fetchUser = () => {
-    const API_BASE = location === 'localhost'
-    ? 'http://localhost:5050'
-    : 'https://bookface-9q1u.onrender.com';
+    const API_BASE = location.hostname === 'localhost'
+      ? 'http://localhost:5050'
+      : 'https://bookface-9q1u.onrender.com';
+  
     fetch(`${API_BASE}/user/profile/${username}`)
-  .then(response => response.json())
-  .then(fetchedUser => {
-      // Update the posts array with the fetched data
-      const user = fetchedUser;
-      const savedUser = JSON.stringify(user);
-      localStorage.setItem('User', savedUser);
-  })
-  .catch(error => console.error("Error fetching users:", error));
-};
+      .then(response => response.json())
+      .then(fetchedUser => {
+        // Create a filtered object with only desired fields
+        const savedUser = {
+          name: fetchedUser.name,
+          email: fetchedUser.email,
+          location: fetchedUser.location,
+          about: fetchedUser.about,
+          groups: fetchedUser.groups,
+          picture: fetchedUser.picture,
+          saved: fetchedUser.saved
+        };
+  
+        // Store the filtered object as a JSON string
+        localStorage.setItem('User', JSON.stringify(savedUser));
+      })
+      .catch(error => console.error("Error fetching user:", error));
+  };
 
 // Elements for displaying and editing profile data
 const profileName = document.getElementById('profile-name');
@@ -289,7 +299,6 @@ function applyProfileData(data) {
     user.about = data.about;
     profilePicture.textContent = data.picture;
     user.picture = data.picture;
-    console.log(user);
     
 
     

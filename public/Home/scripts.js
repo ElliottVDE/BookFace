@@ -35,7 +35,7 @@ const fetchSaves = () => {
       // Update the posts array with the fetched data
       const user = fetchedUser;
       const savedPosts = JSON.stringify(user.saved);
-      const admin = JSON.stringify(user.role);
+      const admin = user.role;
       localStorage.setItem('savedPosts', savedPosts);
       localStroage.setItem('role', admin);
   })
