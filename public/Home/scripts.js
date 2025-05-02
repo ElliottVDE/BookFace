@@ -148,6 +148,26 @@ const deletePost = async (ID) => {
     }
 };
 
+const deleteGroup = async (ID) => {
+    const API_BASE = location.hostname === 'localhost'
+        ? 'http://localhost:5050'
+        : 'https://bookface-9q1u.onrender.com';
+
+    try {
+        const response = await fetch(`${API_BASE}/groups/${ID}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete group");
+        }
+
+        alert("Group deleted!");
+    } catch (error) {
+        console.error("Error deleting group:", error);
+    }
+};
+
 const addPost = async () => {
     const name = $("#name").value.trim();
     const desc = $("#description").value.trim();
@@ -443,6 +463,7 @@ const displayPosts = (posts) => {
         deleteButton.addEventListener("click", () => {
             if (confirm("Are you sure you want to delete this post?")) {
                 deletePost(post._id); // Delete with confirm Button
+                location.reload();
             }
         });
         
@@ -620,6 +641,7 @@ const displayPosts = (posts) => {
         postsContainer.appendChild(postCard);
 
     });
+
     homeContainer.appendChild(postsContainer);
     // Create the break line
     const spacer = document.createElement("div");
@@ -632,7 +654,6 @@ const displayPosts = (posts) => {
     // Append the header and break line before the postCard
 
     groups.slice().reverse().forEach(group => {
-        let membership = [];
         joins = localStorage.getItem("joinedGroups") || [];
         let updatedJoins = [new Set(joins)];
         console.log(updatedJoins);
@@ -653,15 +674,37 @@ const displayPosts = (posts) => {
             groupImage.alt = "Post Image";
             groupCard.appendChild(groupImage);          
         }    
+
+        // Join Button
         const joinedButton = document.createElement("button");
         joinedButton.textContent = joined ? "Leave" : "Join";
         joinedButton.classList.add("toggle-button");
+        groupHeader.appendChild(joinedButton);
+
+        // Description
         const groupDesc = document.createElement("p");
         groupDesc.classList.add("post-description");
-        groupHeader.appendChild(joinedButton);
+        // groupHeader.appendChild(groupDesc);
+
+        // Delete Button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "&times;"; // HTML entity for 'X'
+        deleteButton.classList.add("delete-button");
+        deleteButton.title = "Delete Group";
+
+        if(role === 1 || role === 2) {
+            groupHeader.appendChild(deleteButton);
+        }
+
         groupCard.appendChild(groupHeader);
         
-        
+        deleteButton.addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete this group?")) {
+                deleteGroup(group._id); // Delete with confirm Button
+                location.reload();
+            }
+        });
+
         joinedButton.addEventListener("click", () => {
             let posted = [];
             joined = !joined;
