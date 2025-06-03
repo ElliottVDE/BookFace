@@ -2,8 +2,8 @@
 
 BookFace is a prototype social media site being built for the purposes of learning and gaining experience for CMICH university students. 
 
-[# VISIT US ](**url**https://bookface-9q1u.onrender.com/)
-
+# VISIT US 
+[https://bookface-9q1u.onrender.com/](url)
 ## Installation
 
 1. Clone the repo.
