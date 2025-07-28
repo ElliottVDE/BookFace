@@ -430,11 +430,11 @@ const displayPosts = (posts) => {
     let saves = [];
     const storedUser = JSON.parse(localStorage.getItem('User'));
     const role = storedUser?.role;
-    postsContainer.innerHTML = ""; // Clear previous posts
+    postsContainer.innerHTML = '<div id="pHeader">Posts</div>'; // Clear previous posts
+    groupsContainer.innerHTML = '<div id="gHeader">Groups</div>'; // Clear previous groups
     saves = localStorage.getItem("savedPosts") || [];
     let joins = localStorage.getItem("joinedGroups") || [];
-    // let joins2 = JSON.parse(localStorage.getItem("joinedGroups")) || [];
-    // let updatedJoins = [new Set(joins)];
+
     groups = JSON.parse(localStorage.getItem("groups"));
 
     posts.slice().reverse().forEach(post => {
@@ -691,6 +691,7 @@ const displayPosts = (posts) => {
         deleteButton.classList.add("delete-button");
         deleteButton.title = "Delete Group";
 
+        // Check for user role as admin/moderator
         if(role === 1 || role === 2) {
             groupHeader.appendChild(deleteButton);
         }
