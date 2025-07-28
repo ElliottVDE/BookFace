@@ -4,7 +4,7 @@ BookFace is a full-stack social media web application built for learning and gai
 
 Built by a team of CMU Computer Science graduates as a capstone learning project.
 
- 🌐 ([Live Demo](https://bookface-9q1u.onrender.com/]](https://bookface-9q1u.onrender.com/))
+# 🌐 [Live Demo](https://bookface-9q1u.onrender.com/]](https://bookface-9q1u.onrender.com/))
 
 # 🛠️ Tech Stack
 BookFace is built using the MERN stack, a popular combination of technologies for full-stack JavaScript development:
