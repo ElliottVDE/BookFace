@@ -14,6 +14,7 @@ const fetchPosts = () => {
             const posts = data; // Update the posts array with the fetched data
             if (Array.isArray(posts)) {
                 displayPosts(posts);
+                
               } else {
                 console.error("Posts is not an array:", posts);
               }
@@ -430,8 +431,61 @@ const displayPosts = (posts) => {
     let saves = [];
     const storedUser = JSON.parse(localStorage.getItem('User'));
     const role = storedUser?.role;
-    postsContainer.innerHTML = '<div id="pHeader">Posts</div>'; // Clear previous posts
-    groupsContainer.innerHTML = '<div id="gHeader">Groups</div>'; // Clear previous groups
+    postsContainer.innerHTML = `
+    <div id="postForm" class="section">
+        <h1>Write a Post</h1>
+        <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        </div>
+        <div>
+        <input type="text" id="description" class="large_textbox" placeholder="What's on your mind?">
+        </div>
+        <div>
+        <label for="image">Image:</label>
+        <input type="file" id="image" accept="image/*">
+        </div>
+        <div>
+        <label for="groupID">Group:</label>
+        <input type="text" id="groupID">
+        </div>
+        <div>
+        <button id="post">Post</button>
+        </div>
+    </div>
+    `;
+    document.getElementById('post').addEventListener('click', () => {
+        addPost();
+        $("#name").value = "";
+        $("#description").value = "";
+        $("#image").value = "";
+        $("#groupID").value = "";
+    });
+    groupsContainer.innerHTML = `
+    <div id="groupForm" class="section">
+        <h1>Create a Group</h1>
+        <div>
+        <label for="gname">Name:</label>
+        <input type="text" id="gname">
+        </div>
+        <div>
+        <input type="text" id="gdescription" class="large_textbox" placeholder="What's your group about?">
+        </div>
+        <div>
+        <label for="image">Image:</label>
+        <input type="file" id="gimage" accept="image/*">
+        </div>
+        <div>
+        <button id="groupPost">Create</button>
+        </div>
+    </div>
+    `;
+    document.getElementById('groupPost').addEventListener('click', () => {
+        addGroup();
+        $("#gname").value = "";
+        $("#gdescription").value = "";
+        $("#gimage").value = "";
+    });
     saves = localStorage.getItem("savedPosts") || [];
     let joins = localStorage.getItem("joinedGroups") || [];
 
@@ -834,19 +888,8 @@ function showSection(sectionId, button) {
 document.addEventListener("DOMContentLoaded", fetchPosts);
 document.addEventListener("DOMContentLoaded", fetchGroups);
 document.addEventListener("DOMContentLoaded", fetchSaves);
-document.addEventListener("DOMContentLoaded", () => {
-    $("#post").addEventListener("click", addPost);
-    $("#name").value = "";
-    $("#description").value = "";
-    $("#image").value = "";
-    $("#groupID").value = "";
-});
-document.addEventListener("DOMContentLoaded", () => {
-    $("#groupPost").addEventListener("click", addGroup);
-    $("#gname").value = "";
-    $("#gdescription").value = "";
-    $("#gimage").value = "";
-});
+
+
 
 
 function convertToBase64(file){

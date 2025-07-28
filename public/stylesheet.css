@@ -107,6 +107,7 @@ form textarea {
     resize: none;
 }
 
+
 /* Navbar */
 .navbar {
     background-color: var(--primary-color);
@@ -114,10 +115,15 @@ form textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-radius: var(--border-radius);
     color: var(--secondary-color);
     box-shadow: var(--shadow-default);
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed; 
+    z-index: 1000;
 }
-
 .navbar .logo {
     font-size: 24px;
     font-weight: bold;

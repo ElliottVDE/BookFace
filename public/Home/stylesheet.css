@@ -25,7 +25,10 @@ body {
     line-height: 1.6;
     padding: 20px;
 }
-
+body, html, #navbar-container {
+    overflow: visible; /* good */
+    /* NOT hidden, auto, or scroll */
+}
 /* Navbar */
 .navbar {
     background-color: var(--primary-color);
@@ -33,10 +36,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-radius: var(--border-radius);
     color: var(--secondary-color);
     box-shadow: var(--shadow-default);
-    position: sticky; /* Keeps the navbar fixed at the top */
     top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed; 
     z-index: 1000;
 }
 

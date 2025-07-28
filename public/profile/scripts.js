@@ -81,9 +81,9 @@ const updateUser = async (updatedUser) => {
             throw new Error("Failed to update saved posts");
         }
 
-        console.log("Saved posts updated!");
+        alert("Profile updated successfully!");
     } catch (error) {
-        console.error("Error updating saved posts:", error);
+        console.error("Error updating user:", error);
     }
     fetchUser;
 };
@@ -109,27 +109,34 @@ document.addEventListener("DOMContentLoaded", fetchUser);
 
 const displayPosts = (posts) => {
     const postsContainer = $("#postsContainer");
+    const groupsContainer = $("#groupsContainer");
     let saves = [];
+    let groups = [];
 
     try {
       const raw = localStorage.getItem("savedPosts");
       saves = raw && raw !== "undefined" && raw !== null ? JSON.parse(raw) : [];
     } catch (e) {
+      console.error("Failed to parse saved posts:", e);
       saves = [];
     }
-    // if (savedData) {
-    //     try {
-    //         saves = JSON.parse(savedData);
-    //     } catch (e) {
-    //         console.error("Failed to parse saved posts:", e);
-    //         saves = [];
-    //     }
-    // }
-    postsContainer.innerHTML = ""; // Clear previous posts
+    try { 
+      const raw = localStorage.getItem('groups');
+      groups = raw && raw !== "undefined" && raw !== null ? JSON.parse(raw) : [];
+    } catch (e) {
+      console.error("Failed to parse joined groups:", e);
+      groups = [];
+    }
+
+    postsContainer.innerHTML = '<div id="pHeader"> Saved Posts</div>';
+    groupsContainer.innerHTML = '<div id="gHeader"> Joined Groups</div>';
     
+    const joinedGroups = localStorage.getItem('joinedGroups')?.split(',').map(name => name.trim().toLowerCase()) || [];
+    const joins = groups.filter(group =>
+        joinedGroups.includes(group.name.replace(/\s+/g, '').toLowerCase()));
 
     const savedPosts = posts.filter(post => saves.includes(post._id));
-    console.log(savedPosts);
+    console.log("Joined groups:", joins);
     savedPosts.slice().reverse().forEach(post => {
         const postCard = document.createElement("div");
         postCard.classList.add("post-card");
@@ -190,9 +197,29 @@ const displayPosts = (posts) => {
         }
 
         postsContainer.appendChild(postCard);
- });
+    });
+    joins.slice().reverse().forEach(group => {
+        const groupCard = document.createElement("div");
+        groupCard.classList.add("post-card");
+        const groupHeader = document.createElement("div");
+        groupHeader.classList.add("post-header");
+        groupHeader.textContent = group.name;
+           // Add image
+        if (group.image !== null) {
+            const groupImage = document.createElement("img");
+            groupImage.src = group.image;
+            groupImage.alt = "Post Image";
+            groupCard.appendChild(groupImage);          
+        }    
 
-}
+        // Description
+        const groupDesc = document.createElement("p");
+        groupDesc.classList.add("post-description");
+        // groupHeader.appendChild(groupDesc);
+
+        groupCard.appendChild(groupHeader);
+        groupsContainer.appendChild(groupCard);
+        });}
 
 function editProfile() {
     if (editing) return; // Prevent multiple edit states
@@ -246,17 +273,19 @@ async function saveProfile() {
         about: document.getElementById('edit-about').value,
         picture: base64
     };
-
+    console.log("Updated Data:", updatedData);
     // Check for uploaded picture
     if (imageInput && file) {
         const reader = new FileReader();
         reader.onload = function (e) {
             updatedData.picture = e.target.result;
-            applyProfileData(updatedData);
+            localStorage.setItem('User', JSON.stringify(updatedData));
+            applyProfileData(updatedData); 
         };
         reader.readAsDataURL(file);
     } else {
         updatedData.picture = profilePicture.src;
+        localStorage.setItem('User', JSON.stringify(updatedData)); 
         applyProfileData(updatedData);
     }
 
@@ -265,7 +294,6 @@ async function saveProfile() {
     saveButton.style.display = 'none';
     cancelButton.style.display = 'none';
     editButton.style.display = 'inline';
-    location.reload();
 }
 
 
@@ -289,7 +317,7 @@ function cancelEdit() {
 
 function applyProfileData(data) {
     let user = JSON.parse(localStorage.getItem('User'));
-
+    console.log(profileName.textContent);
     profileName.textContent = data.name;
     user.name = data.name;
     profileEmail.textContent = data.email;
