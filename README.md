@@ -4,9 +4,9 @@ BookFace is a full-stack social media web application built for learning and gai
 
 Built by a team of CMU Computer Science graduates as a capstone learning project.
 
-# 🌐 [Live Demo]([url](https://bookface-9q1u.onrender.com/))
+🌐 [Live Demo]([url](https://bookface-9q1u.onrender.com/))
 
-🛠️ Tech Stack
+# 🛠️ Tech Stack
 BookFace is built using the MERN stack, a popular combination of technologies for full-stack JavaScript development:
 
 MongoDB – A NoSQL document-based database used to store user data, posts, comments, and relationships.
@@ -17,7 +17,7 @@ React.js – A powerful frontend library used for building dynamic user interfac
 
 Node.js – A JavaScript runtime that powers the backend server and connects all other components together.
 
-🚀 Getting Started
+# 🚀 Getting Started
 Follow these steps to set up the project locally:
 
 Prerequisites
